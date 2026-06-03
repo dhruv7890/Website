@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dhruv Pandya | Portfolio</title>
+<title>Dhruv Pandya | AI Portfolio</title>
 
 <style>
 *{
@@ -14,13 +14,12 @@
 
 body{
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: radial-gradient(circle at top, #050816, #000);
+    background: radial-gradient(circle at top, #020617, #000);
     color:white;
-    line-height:1.6;
     overflow-x:hidden;
 }
 
-/* Glow background effect */
+/* Ambient hologram glow */
 body::before{
     content:"";
     position:fixed;
@@ -28,17 +27,19 @@ body::before{
     left:-50%;
     width:200%;
     height:200%;
-    background: radial-gradient(circle, rgba(0,140,255,0.15), transparent 40%);
-    animation: moveGlow 12s linear infinite;
+    background: radial-gradient(circle, rgba(0,200,255,0.12), transparent 40%),
+                radial-gradient(circle at bottom right, rgba(138,43,226,0.12), transparent 40%);
+    animation: floatGlow 14s infinite linear;
     z-index:-1;
 }
 
-@keyframes moveGlow{
+@keyframes floatGlow{
     0%{transform:translate(0,0);}
-    50%{transform:translate(10%,10%);}
+    50%{transform:translate(3%,5%);}
     100%{transform:translate(0,0);}
 }
 
+/* HEADER */
 header{
     min-height:100vh;
     display:flex;
@@ -51,10 +52,10 @@ header{
 
 header h1{
     font-size:4rem;
-    letter-spacing:2px;
-    background: linear-gradient(90deg,#00d4ff,#3b82f6,#a855f7);
+    background: linear-gradient(90deg,#00e5ff,#3b82f6,#a855f7);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
+    letter-spacing:2px;
 }
 
 header h2{
@@ -67,23 +68,25 @@ header p{
     color:#cbd5e1;
 }
 
+/* BUTTON */
 .btn{
     display:inline-block;
     margin-top:25px;
-    padding:12px 25px;
+    padding:12px 28px;
     background: linear-gradient(90deg,#2563eb,#7c3aed);
-    color:white;
+    border-radius:12px;
     text-decoration:none;
-    border-radius:10px;
+    color:white;
+    box-shadow:0 0 25px rgba(59,130,246,0.4);
     transition:.3s;
-    box-shadow: 0 0 20px rgba(59,130,246,0.4);
 }
 
 .btn:hover{
-    transform:translateY(-3px) scale(1.05);
-    box-shadow: 0 0 30px rgba(59,130,246,0.7);
+    transform:scale(1.05);
+    box-shadow:0 0 40px rgba(0,200,255,0.6);
 }
 
+/* SECTIONS */
 section{
     max-width:1100px;
     margin:auto;
@@ -95,42 +98,78 @@ section{
     font-size:2.5rem;
     margin-bottom:40px;
     color:#38bdf8;
-    letter-spacing:1px;
 }
 
-.card{
-    background: rgba(17,24,39,0.7);
-    backdrop-filter: blur(10px);
+/* 🔥 HOLOGRAM CARD CORE */
+.card, .project{
+    position:relative;
+    background: rgba(10, 15, 30, 0.6);
+    backdrop-filter: blur(14px);
+    border-radius:16px;
     padding:25px;
-    border-radius:15px;
-    border:1px solid rgba(59,130,246,0.2);
-    box-shadow: 0 0 25px rgba(0,140,255,0.08);
+    border:1px solid rgba(0, 229, 255, 0.25);
+    box-shadow: 0 0 25px rgba(0, 200, 255, 0.08);
+    overflow:hidden;
+    transition:0.3s;
 }
 
+/* Neon animated border glow */
+.card::before, .project::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:16px;
+    padding:1px;
+    background: linear-gradient(90deg, transparent, #00e5ff, #7c3aed, transparent);
+    background-size:300% 300%;
+    animation: borderMove 5s linear infinite;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    pointer-events:none;
+}
+
+@keyframes borderMove{
+    0%{background-position:0% 50%;}
+    100%{background-position:100% 50%;}
+}
+
+/* Scan line effect */
+.card::after, .project::after{
+    content:"";
+    position:absolute;
+    top:-100%;
+    left:0;
+    width:100%;
+    height:200%;
+    background: linear-gradient(to bottom,
+        transparent,
+        rgba(0,229,255,0.08),
+        transparent);
+    animation: scan 4s linear infinite;
+    pointer-events:none;
+}
+
+@keyframes scan{
+    0%{transform:translateY(-50%);}
+    100%{transform:translateY(50%);}
+}
+
+/* hover glow boost */
+.card:hover, .project:hover{
+    transform:translateY(-6px);
+    box-shadow:0 0 35px rgba(0,200,255,0.25);
+}
+
+/* GRID */
 .grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
     gap:20px;
 }
 
-.project{
-    background: rgba(17,24,39,0.7);
-    border:1px solid rgba(59,130,246,0.2);
-    border-radius:15px;
-    padding:25px;
-    transition:.3s;
-}
-
-.project:hover{
-    transform:translateY(-8px);
-    box-shadow:0 0 25px rgba(0,140,255,0.2);
-}
-
-.project h3{
-    color:#60a5fa;
-    margin-bottom:10px;
-}
-
+/* SKILLS */
 .skills{
     display:flex;
     flex-wrap:wrap;
@@ -139,19 +178,20 @@ section{
 }
 
 .skill{
-    background: rgba(37,99,235,0.2);
-    border:1px solid rgba(59,130,246,0.3);
     padding:10px 15px;
     border-radius:20px;
+    background: rgba(0,229,255,0.08);
+    border:1px solid rgba(0,229,255,0.25);
     color:#e0f2fe;
 }
 
+/* FOOTER */
 footer{
     text-align:center;
     padding:40px;
-    background:#050816;
+    background:#020617;
     color:#94a3b8;
-    border-top:1px solid rgba(59,130,246,0.2);
+    border-top:1px solid rgba(0,229,255,0.2);
 }
 
 .contact{
@@ -160,7 +200,6 @@ footer{
 
 .contact a{
     color:#38bdf8;
-    text-decoration:none;
 }
 </style>
 </head>
@@ -173,8 +212,7 @@ footer{
 
     <p>
         Passionate about Artificial Intelligence, Cybersecurity,
-        Software Development, Cloud Systems, Networking, and building
-        intelligent AI-powered applications and future-ready systems.
+        Software Development, Cloud Systems, Networking, and futuristic computing systems.
     </p>
 
     <a href="#projects" class="btn">Explore My Work</a>
@@ -182,39 +220,22 @@ footer{
 
 <section>
     <h2 class="section-title">About Me</h2>
-
     <div class="card">
-        <p>
-            I am a Computer Science & Information Technology student focused on
-            Artificial Intelligence, automation, and modern software engineering.
-            I enjoy building systems that combine intelligence, design, and real-world usability.
-        </p>
-
-        <br>
-
-        <p>
-            My long-term goal is to create advanced AI systems that assist with
-            automation, productivity, smart environments, and next-generation computing.
-        </p>
+        I am a Computer Science & IT student focused on Artificial Intelligence,
+        automation, and next-generation software systems.
     </div>
 </section>
 
 <section>
     <h2 class="section-title">Skills</h2>
-
     <div class="skills">
         <div class="skill">Python</div>
-        <div class="skill">HTML</div>
-        <div class="skill">CSS</div>
-        <div class="skill">JavaScript</div>
-        <div class="skill">React</div>
-        <div class="skill">Artificial Intelligence</div>
+        <div class="skill">AI</div>
         <div class="skill">Machine Learning</div>
         <div class="skill">Cybersecurity</div>
+        <div class="skill">React</div>
         <div class="skill">Linux</div>
         <div class="skill">Networking</div>
-        <div class="skill">Cloud Computing</div>
-        <div class="skill">Git & GitHub</div>
     </div>
 </section>
 
@@ -225,98 +246,36 @@ footer{
 
         <div class="project">
             <h3>AI Assistant System</h3>
-            <p>
-                A voice-enabled AI system designed for automation, task execution,
-                and intelligent interaction with digital environments.
-            </p>
+            <p>Intelligent automation system with voice interaction and task execution.</p>
         </div>
 
         <div class="project">
             <h3>Home Lab Infrastructure</h3>
-            <p>
-                Self-hosted environment for learning servers, networking,
-                virtualization, and cloud-like services.
-            </p>
+            <p>Self-hosted servers, networking, and cloud-like environment.</p>
         </div>
 
         <div class="project">
             <h3>Cybersecurity Labs</h3>
-            <p>
-                Ethical hacking and security research including penetration testing,
-                vulnerability analysis, and network defense.
-            </p>
+            <p>Ethical hacking, penetration testing, and vulnerability research.</p>
         </div>
 
         <div class="project">
-            <h3>Web Development Projects</h3>
-            <p>
-                Modern responsive websites and applications built using
-                frontend and backend technologies.
-            </p>
+            <h3>Web Development</h3>
+            <p>Modern responsive applications and UI systems.</p>
         </div>
 
-    </div>
-</section>
-
-<section>
-    <h2 class="section-title">Home Lab</h2>
-
-    <div class="card">
-        <p>
-            My home lab focuses on Artificial Intelligence, automation,
-            networking, and self-hosted systems for real-world experimentation.
-        </p>
-
-        <br>
-
-        <ul>
-            <li>Media Streaming Server</li>
-            <li>Photo Backup System</li>
-            <li>Smart DNS Filtering</li>
-            <li>Remote Access Networking</li>
-            <li>AI Experiments & Tools</li>
-        </ul>
-    </div>
-</section>
-
-<section>
-    <h2 class="section-title">Education</h2>
-
-    <div class="card">
-        <h3>Computer Science & Information Technology</h3>
-        <p>
-            Focused on Artificial Intelligence, software engineering,
-            cloud computing, cybersecurity, and system architecture.
-        </p>
-    </div>
-</section>
-
-<section>
-    <h2 class="section-title">Future Goals</h2>
-
-    <div class="card">
-        <ul>
-            <li>Build advanced AI systems and agents</li>
-            <li>Expand scalable home lab infrastructure</li>
-            <li>Work in AI / Cybersecurity industry</li>
-            <li>Develop intelligent software platforms</li>
-            <li>Contribute to open-source AI projects</li>
-        </ul>
     </div>
 </section>
 
 <section>
     <h2 class="section-title">Contact</h2>
-
-    <div class="contact">
-        <p>GitHub: github.com/dhruv7890</p>
-        <br>
-        <p>Email / LinkedIn can be added here</p>
+    <div class="card">
+        GitHub: github.com/dhruv7890
     </div>
 </section>
 
 <footer>
-    <p>© 2026 Dhruv Pandya. All Rights Reserved.</p>
+    © 2026 Dhruv Pandya. All Rights Reserved.
 </footer>
 
 </body>
