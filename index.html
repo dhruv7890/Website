@@ -13,10 +13,30 @@
 }
 
 body{
-    font-family:Segoe UI,Arial,sans-serif;
-    background:#0a0f1f;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: radial-gradient(circle at top, #050816, #000);
     color:white;
     line-height:1.6;
+    overflow-x:hidden;
+}
+
+/* Glow background effect */
+body::before{
+    content:"";
+    position:fixed;
+    top:-50%;
+    left:-50%;
+    width:200%;
+    height:200%;
+    background: radial-gradient(circle, rgba(0,140,255,0.15), transparent 40%);
+    animation: moveGlow 12s linear infinite;
+    z-index:-1;
+}
+
+@keyframes moveGlow{
+    0%{transform:translate(0,0);}
+    50%{transform:translate(10%,10%);}
+    100%{transform:translate(0,0);}
 }
 
 header{
@@ -27,17 +47,19 @@ header{
     align-items:center;
     text-align:center;
     padding:20px;
-    background:linear-gradient(135deg,#0f172a,#1e293b);
 }
 
 header h1{
     font-size:4rem;
-    margin-bottom:10px;
+    letter-spacing:2px;
+    background: linear-gradient(90deg,#00d4ff,#3b82f6,#a855f7);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
 
 header h2{
-    color:#60a5fa;
-    margin-bottom:20px;
+    color:#38bdf8;
+    margin:10px 0 20px;
 }
 
 header p{
@@ -49,19 +71,21 @@ header p{
     display:inline-block;
     margin-top:25px;
     padding:12px 25px;
-    background:#2563eb;
+    background: linear-gradient(90deg,#2563eb,#7c3aed);
     color:white;
     text-decoration:none;
-    border-radius:8px;
+    border-radius:10px;
     transition:.3s;
+    box-shadow: 0 0 20px rgba(59,130,246,0.4);
 }
 
 .btn:hover{
-    transform:translateY(-2px);
+    transform:translateY(-3px) scale(1.05);
+    box-shadow: 0 0 30px rgba(59,130,246,0.7);
 }
 
 section{
-    max-width:1200px;
+    max-width:1100px;
     margin:auto;
     padding:80px 20px;
 }
@@ -70,25 +94,41 @@ section{
     text-align:center;
     font-size:2.5rem;
     margin-bottom:40px;
-    color:#60a5fa;
+    color:#38bdf8;
+    letter-spacing:1px;
+}
+
+.card{
+    background: rgba(17,24,39,0.7);
+    backdrop-filter: blur(10px);
+    padding:25px;
+    border-radius:15px;
+    border:1px solid rgba(59,130,246,0.2);
+    box-shadow: 0 0 25px rgba(0,140,255,0.08);
 }
 
 .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:25px;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
 }
 
-.card{
-    background:#111827;
-    padding:25px;
+.project{
+    background: rgba(17,24,39,0.7);
+    border:1px solid rgba(59,130,246,0.2);
     border-radius:15px;
-    border:1px solid #1f2937;
+    padding:25px;
+    transition:.3s;
 }
 
-.card h3{
-    margin-bottom:10px;
+.project:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 25px rgba(0,140,255,0.2);
+}
+
+.project h3{
     color:#60a5fa;
+    margin-bottom:10px;
 }
 
 .skills{
@@ -99,27 +139,19 @@ section{
 }
 
 .skill{
-    background:#1e293b;
+    background: rgba(37,99,235,0.2);
+    border:1px solid rgba(59,130,246,0.3);
     padding:10px 15px;
     border-radius:20px;
-}
-
-.project{
-    background:#111827;
-    border-radius:15px;
-    padding:25px;
-    transition:.3s;
-}
-
-.project:hover{
-    transform:translateY(-5px);
+    color:#e0f2fe;
 }
 
 footer{
     text-align:center;
     padding:40px;
-    background:#111827;
+    background:#050816;
     color:#94a3b8;
+    border-top:1px solid rgba(59,130,246,0.2);
 }
 
 .contact{
@@ -127,7 +159,7 @@ footer{
 }
 
 .contact a{
-    color:#60a5fa;
+    color:#38bdf8;
     text-decoration:none;
 }
 </style>
@@ -137,15 +169,15 @@ footer{
 
 <header>
     <h1>Dhruv Pandya</h1>
-    <h2>Computer Science & Information Technology Student</h2>
+    <h2>Artificial Intelligence & Technology Student</h2>
 
     <p>
         Passionate about Artificial Intelligence, Cybersecurity,
-        Software Development, Home Labs, Networking, and building
-        my own J.A.R.V.I.S.-style AI assistant.
+        Software Development, Cloud Systems, Networking, and building
+        intelligent AI-powered applications and future-ready systems.
     </p>
 
-    <a href="#projects" class="btn">View My Projects</a>
+    <a href="#projects" class="btn">Explore My Work</a>
 </header>
 
 <section>
@@ -153,18 +185,16 @@ footer{
 
     <div class="card">
         <p>
-            Hello! My name is Dhruv Pandya. I am pursuing a double major in
-            Computer Science and Information Technology. I enjoy creating
-            software, exploring cybersecurity, building home lab
-            infrastructure, and experimenting with artificial intelligence.
+            I am a Computer Science & Information Technology student focused on
+            Artificial Intelligence, automation, and modern software engineering.
+            I enjoy building systems that combine intelligence, design, and real-world usability.
         </p>
 
         <br>
 
         <p>
-            My long-term goal is to build a real-life J.A.R.V.I.S.-inspired
-            assistant capable of voice interaction, automation, smart home
-            control, and advanced AI capabilities.
+            My long-term goal is to create advanced AI systems that assist with
+            automation, productivity, smart environments, and next-generation computing.
         </p>
     </div>
 </section>
@@ -178,11 +208,12 @@ footer{
         <div class="skill">CSS</div>
         <div class="skill">JavaScript</div>
         <div class="skill">React</div>
+        <div class="skill">Artificial Intelligence</div>
+        <div class="skill">Machine Learning</div>
         <div class="skill">Cybersecurity</div>
         <div class="skill">Linux</div>
         <div class="skill">Networking</div>
         <div class="skill">Cloud Computing</div>
-        <div class="skill">AI</div>
         <div class="skill">Git & GitHub</div>
     </div>
 </section>
@@ -193,36 +224,34 @@ footer{
     <div class="grid">
 
         <div class="project">
-            <h3>J.A.R.V.I.S. Assistant</h3>
+            <h3>AI Assistant System</h3>
             <p>
-                A voice-controlled AI assistant inspired by Iron Man's
-                J.A.R.V.I.S., designed to run locally and remotely while
-                controlling services and smart devices.
+                A voice-enabled AI system designed for automation, task execution,
+                and intelligent interaction with digital environments.
             </p>
         </div>
 
         <div class="project">
             <h3>Home Lab Infrastructure</h3>
             <p>
-                Self-hosted environment featuring media servers,
-                networking tools, monitoring systems, and secure remote
-                access solutions.
+                Self-hosted environment for learning servers, networking,
+                virtualization, and cloud-like services.
             </p>
         </div>
 
         <div class="project">
             <h3>Cybersecurity Labs</h3>
             <p>
-                Security-focused projects involving penetration testing,
-                networking, vulnerability analysis, and ethical hacking.
+                Ethical hacking and security research including penetration testing,
+                vulnerability analysis, and network defense.
             </p>
         </div>
 
         <div class="project">
             <h3>Web Development Projects</h3>
             <p>
-                Responsive websites and applications built with modern
-                web technologies.
+                Modern responsive websites and applications built using
+                frontend and backend technologies.
             </p>
         </div>
 
@@ -234,20 +263,18 @@ footer{
 
     <div class="card">
         <p>
-            My home lab is dedicated to learning infrastructure,
-            networking, virtualization, automation, AI deployment,
-            and self-hosted services.
+            My home lab focuses on Artificial Intelligence, automation,
+            networking, and self-hosted systems for real-world experimentation.
         </p>
 
         <br>
 
         <ul>
-            <li>Jellyfin Media Server</li>
-            <li>Immich Photo Backup</li>
-            <li>Mealie Recipe Manager</li>
-            <li>AdGuard Home DNS Filtering</li>
-            <li>Tailscale Remote Access</li>
-            <li>AI Services & Experiments</li>
+            <li>Media Streaming Server</li>
+            <li>Photo Backup System</li>
+            <li>Smart DNS Filtering</li>
+            <li>Remote Access Networking</li>
+            <li>AI Experiments & Tools</li>
         </ul>
     </div>
 </section>
@@ -258,9 +285,8 @@ footer{
     <div class="card">
         <h3>Computer Science & Information Technology</h3>
         <p>
-            Double Major Student focused on software development,
-            cybersecurity, cloud technologies, networking,
-            and artificial intelligence.
+            Focused on Artificial Intelligence, software engineering,
+            cloud computing, cybersecurity, and system architecture.
         </p>
     </div>
 </section>
@@ -270,11 +296,11 @@ footer{
 
     <div class="card">
         <ul>
-            <li>Build a production-grade J.A.R.V.I.S. assistant</li>
-            <li>Expand my home lab infrastructure</li>
-            <li>Work in AI and cybersecurity</li>
-            <li>Develop innovative software solutions</li>
-            <li>Contribute to open-source projects</li>
+            <li>Build advanced AI systems and agents</li>
+            <li>Expand scalable home lab infrastructure</li>
+            <li>Work in AI / Cybersecurity industry</li>
+            <li>Develop intelligent software platforms</li>
+            <li>Contribute to open-source AI projects</li>
         </ul>
     </div>
 </section>
@@ -285,7 +311,7 @@ footer{
     <div class="contact">
         <p>GitHub: github.com/dhruv7890</p>
         <br>
-        <p>Add your LinkedIn, email, and other links here.</p>
+        <p>Email / LinkedIn can be added here</p>
     </div>
 </section>
 
