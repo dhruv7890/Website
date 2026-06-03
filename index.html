@@ -1,6 +1,297 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhruv Pandya | Portfolio</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Segoe UI,Arial,sans-serif;
+    background:#0a0f1f;
+    color:white;
+    line-height:1.6;
+}
+
+header{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+}
+
+header h1{
+    font-size:4rem;
+    margin-bottom:10px;
+}
+
+header h2{
+    color:#60a5fa;
+    margin-bottom:20px;
+}
+
+header p{
+    max-width:700px;
+    color:#cbd5e1;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:12px 25px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+section{
+    max-width:1200px;
+    margin:auto;
+    padding:80px 20px;
+}
+
+.section-title{
+    text-align:center;
+    font-size:2.5rem;
+    margin-bottom:40px;
+    color:#60a5fa;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:#111827;
+    padding:25px;
+    border-radius:15px;
+    border:1px solid #1f2937;
+}
+
+.card h3{
+    margin-bottom:10px;
+    color:#60a5fa;
+}
+
+.skills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+}
+
+.skill{
+    background:#1e293b;
+    padding:10px 15px;
+    border-radius:20px;
+}
+
+.project{
+    background:#111827;
+    border-radius:15px;
+    padding:25px;
+    transition:.3s;
+}
+
+.project:hover{
+    transform:translateY(-5px);
+}
+
+footer{
+    text-align:center;
+    padding:40px;
+    background:#111827;
+    color:#94a3b8;
+}
+
+.contact{
+    text-align:center;
+}
+
+.contact a{
+    color:#60a5fa;
+    text-decoration:none;
+}
+</style>
+</head>
+
 <body>
-<h1>THIS IS THE NEW WEBSITE</h1>
+
+<header>
+    <h1>Dhruv Pandya</h1>
+    <h2>Computer Science & Information Technology Student</h2>
+
+    <p>
+        Passionate about Artificial Intelligence, Cybersecurity,
+        Software Development, Home Labs, Networking, and building
+        my own J.A.R.V.I.S.-style AI assistant.
+    </p>
+
+    <a href="#projects" class="btn">View My Projects</a>
+</header>
+
+<section>
+    <h2 class="section-title">About Me</h2>
+
+    <div class="card">
+        <p>
+            Hello! My name is Dhruv Pandya. I am pursuing a double major in
+            Computer Science and Information Technology. I enjoy creating
+            software, exploring cybersecurity, building home lab
+            infrastructure, and experimenting with artificial intelligence.
+        </p>
+
+        <br>
+
+        <p>
+            My long-term goal is to build a real-life J.A.R.V.I.S.-inspired
+            assistant capable of voice interaction, automation, smart home
+            control, and advanced AI capabilities.
+        </p>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">Skills</h2>
+
+    <div class="skills">
+        <div class="skill">Python</div>
+        <div class="skill">HTML</div>
+        <div class="skill">CSS</div>
+        <div class="skill">JavaScript</div>
+        <div class="skill">React</div>
+        <div class="skill">Cybersecurity</div>
+        <div class="skill">Linux</div>
+        <div class="skill">Networking</div>
+        <div class="skill">Cloud Computing</div>
+        <div class="skill">AI</div>
+        <div class="skill">Git & GitHub</div>
+    </div>
+</section>
+
+<section id="projects">
+    <h2 class="section-title">Projects</h2>
+
+    <div class="grid">
+
+        <div class="project">
+            <h3>J.A.R.V.I.S. Assistant</h3>
+            <p>
+                A voice-controlled AI assistant inspired by Iron Man's
+                J.A.R.V.I.S., designed to run locally and remotely while
+                controlling services and smart devices.
+            </p>
+        </div>
+
+        <div class="project">
+            <h3>Home Lab Infrastructure</h3>
+            <p>
+                Self-hosted environment featuring media servers,
+                networking tools, monitoring systems, and secure remote
+                access solutions.
+            </p>
+        </div>
+
+        <div class="project">
+            <h3>Cybersecurity Labs</h3>
+            <p>
+                Security-focused projects involving penetration testing,
+                networking, vulnerability analysis, and ethical hacking.
+            </p>
+        </div>
+
+        <div class="project">
+            <h3>Web Development Projects</h3>
+            <p>
+                Responsive websites and applications built with modern
+                web technologies.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">Home Lab</h2>
+
+    <div class="card">
+        <p>
+            My home lab is dedicated to learning infrastructure,
+            networking, virtualization, automation, AI deployment,
+            and self-hosted services.
+        </p>
+
+        <br>
+
+        <ul>
+            <li>Jellyfin Media Server</li>
+            <li>Immich Photo Backup</li>
+            <li>Mealie Recipe Manager</li>
+            <li>AdGuard Home DNS Filtering</li>
+            <li>Tailscale Remote Access</li>
+            <li>AI Services & Experiments</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">Education</h2>
+
+    <div class="card">
+        <h3>Computer Science & Information Technology</h3>
+        <p>
+            Double Major Student focused on software development,
+            cybersecurity, cloud technologies, networking,
+            and artificial intelligence.
+        </p>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">Future Goals</h2>
+
+    <div class="card">
+        <ul>
+            <li>Build a production-grade J.A.R.V.I.S. assistant</li>
+            <li>Expand my home lab infrastructure</li>
+            <li>Work in AI and cybersecurity</li>
+            <li>Develop innovative software solutions</li>
+            <li>Contribute to open-source projects</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">Contact</h2>
+
+    <div class="contact">
+        <p>GitHub: github.com/dhruv7890</p>
+        <br>
+        <p>Add your LinkedIn, email, and other links here.</p>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Dhruv Pandya. All Rights Reserved.</p>
+</footer>
+
 </body>
 </html>
