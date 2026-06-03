@@ -1,9 +1,153 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Website</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhruv Pandya | Portfolio</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+    line-height:1.6;
+}
+
+header{
+    text-align:center;
+    padding:80px 20px;
+    background:#111827;
+}
+
+header h1{
+    font-size:3rem;
+}
+
+header p{
+    color:#94a3b8;
+    margin-top:10px;
+}
+
+section{
+    max-width:1000px;
+    margin:auto;
+    padding:50px 20px;
+}
+
+h2{
+    margin-bottom:20px;
+    border-bottom:2px solid #3b82f6;
+    display:inline-block;
+    padding-bottom:5px;
+}
+
+.card{
+    background:#1e293b;
+    padding:20px;
+    margin:15px 0;
+    border-radius:10px;
+}
+
+.project{
+    background:#1e293b;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:10px;
+}
+
+.project h3{
+    margin-bottom:10px;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 20px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    border-radius:5px;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    background:#111827;
+    color:#94a3b8;
+}
+</style>
 </head>
+
 <body>
-    <h1>Hello World!</h1>
+
+<header>
+    <h1>Dhruv Pandya</h1>
+    <p>Computer Science & Information Technology Student</p>
+</header>
+
+<section id="about">
+    <h2>About Me</h2>
+
+    <div class="card">
+        <p>
+            Hello! My name is Dhruv Pandya. I am a Computer Science and
+            Information Technology student interested in software
+            development, cybersecurity, AI, home labs, and building my
+            own J.A.R.V.I.S.-style assistant.
+        </p>
+    </div>
+</section>
+
+<section id="projects">
+    <h2>Projects</h2>
+
+    <div class="project">
+        <h3>J.A.R.V.I.S. Assistant</h3>
+        <p>
+            Voice-controlled AI assistant running on Ubuntu with future
+            smart home integration.
+        </p>
+        <a href="#" class="btn">View Project</a>
+    </div>
+
+    <div class="project">
+        <h3>Home Lab</h3>
+        <p>
+            Self-hosted services including Jellyfin, Immich, Mealie,
+            AdGuard Home, and Tailscale.
+        </p>
+        <a href="#" class="btn">View Project</a>
+    </div>
+
+    <div class="project">
+        <h3>Cybersecurity Projects</h3>
+        <p>
+            Security research, penetration testing labs, and networking
+            experiments.
+        </p>
+        <a href="#" class="btn">View Project</a>
+    </div>
+</section>
+
+<section id="contact">
+    <h2>Contact</h2>
+
+    <div class="card">
+        <p>Email: your-email@example.com</p>
+        <p>GitHub: github.com/yourusername</p>
+        <p>LinkedIn: linkedin.com/in/yourprofile</p>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Dhruv Pandya. All Rights Reserved.</p>
+</footer>
+
 </body>
 </html>
