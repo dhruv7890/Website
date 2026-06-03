@@ -13,13 +13,23 @@
 }
 
 body{
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family:'Segoe UI', Arial, sans-serif;
     background: radial-gradient(circle at top, #020617, #000);
     color:white;
     overflow-x:hidden;
 }
 
-/* Ambient hologram glow */
+/* ===== PARTICLE CANVAS ===== */
+#particles{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:-3;
+}
+
+/* ===== BACKGROUND GLOW ===== */
 body::before{
     content:"";
     position:fixed;
@@ -27,10 +37,11 @@ body::before{
     left:-50%;
     width:200%;
     height:200%;
-    background: radial-gradient(circle, rgba(0,200,255,0.12), transparent 40%),
-                radial-gradient(circle at bottom right, rgba(138,43,226,0.12), transparent 40%);
-    animation: floatGlow 14s infinite linear;
-    z-index:-1;
+    background:
+        radial-gradient(circle, rgba(0,229,255,0.12), transparent 40%),
+        radial-gradient(circle at bottom right, rgba(124,58,237,0.12), transparent 40%);
+    animation: floatGlow 14s linear infinite;
+    z-index:-2;
 }
 
 @keyframes floatGlow{
@@ -39,7 +50,7 @@ body::before{
     100%{transform:translate(0,0);}
 }
 
-/* HEADER */
+/* ===== HEADER ===== */
 header{
     min-height:100vh;
     display:flex;
@@ -55,7 +66,6 @@ header h1{
     background: linear-gradient(90deg,#00e5ff,#3b82f6,#a855f7);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
-    letter-spacing:2px;
 }
 
 header h2{
@@ -68,25 +78,25 @@ header p{
     color:#cbd5e1;
 }
 
-/* BUTTON */
+/* ===== BUTTON ===== */
 .btn{
     display:inline-block;
     margin-top:25px;
     padding:12px 28px;
-    background: linear-gradient(90deg,#2563eb,#7c3aed);
     border-radius:12px;
     text-decoration:none;
     color:white;
-    box-shadow:0 0 25px rgba(59,130,246,0.4);
-    transition:.3s;
+    background:linear-gradient(90deg,#2563eb,#7c3aed);
+    box-shadow:0 0 25px rgba(0,200,255,0.4);
+    transition:0.3s;
 }
 
 .btn:hover{
     transform:scale(1.05);
-    box-shadow:0 0 40px rgba(0,200,255,0.6);
+    box-shadow:0 0 40px rgba(0,229,255,0.6);
 }
 
-/* SECTIONS */
+/* ===== SECTIONS ===== */
 section{
     max-width:1100px;
     margin:auto;
@@ -100,33 +110,32 @@ section{
     color:#38bdf8;
 }
 
-/* 🔥 HOLOGRAM CARD CORE */
+/* ===== HOLOGRAM CARDS ===== */
 .card, .project{
     position:relative;
-    background: rgba(10, 15, 30, 0.6);
-    backdrop-filter: blur(14px);
+    background:rgba(10,15,30,0.6);
+    backdrop-filter:blur(14px);
     border-radius:16px;
     padding:25px;
-    border:1px solid rgba(0, 229, 255, 0.25);
-    box-shadow: 0 0 25px rgba(0, 200, 255, 0.08);
+    border:1px solid rgba(0,229,255,0.25);
     overflow:hidden;
     transition:0.3s;
 }
 
-/* Neon animated border glow */
+/* glowing border animation */
 .card::before, .project::before{
     content:"";
     position:absolute;
     inset:0;
     border-radius:16px;
     padding:1px;
-    background: linear-gradient(90deg, transparent, #00e5ff, #7c3aed, transparent);
+    background:linear-gradient(90deg,transparent,#00e5ff,#7c3aed,transparent);
     background-size:300% 300%;
-    animation: borderMove 5s linear infinite;
+    animation:borderMove 5s linear infinite;
     -webkit-mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
     pointer-events:none;
 }
 
@@ -135,7 +144,7 @@ section{
     100%{background-position:100% 50%;}
 }
 
-/* Scan line effect */
+/* scan line */
 .card::after, .project::after{
     content:"";
     position:absolute;
@@ -143,11 +152,11 @@ section{
     left:0;
     width:100%;
     height:200%;
-    background: linear-gradient(to bottom,
+    background:linear-gradient(to bottom,
         transparent,
         rgba(0,229,255,0.08),
         transparent);
-    animation: scan 4s linear infinite;
+    animation:scan 4s linear infinite;
     pointer-events:none;
 }
 
@@ -156,20 +165,18 @@ section{
     100%{transform:translateY(50%);}
 }
 
-/* hover glow boost */
 .card:hover, .project:hover{
     transform:translateY(-6px);
-    box-shadow:0 0 35px rgba(0,200,255,0.25);
 }
 
-/* GRID */
+/* ===== GRID ===== */
 .grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
     gap:20px;
 }
 
-/* SKILLS */
+/* ===== SKILLS ===== */
 .skills{
     display:flex;
     flex-wrap:wrap;
@@ -180,12 +187,11 @@ section{
 .skill{
     padding:10px 15px;
     border-radius:20px;
-    background: rgba(0,229,255,0.08);
+    background:rgba(0,229,255,0.08);
     border:1px solid rgba(0,229,255,0.25);
-    color:#e0f2fe;
 }
 
-/* FOOTER */
+/* ===== FOOTER ===== */
 footer{
     text-align:center;
     padding:40px;
@@ -193,36 +199,29 @@ footer{
     color:#94a3b8;
     border-top:1px solid rgba(0,229,255,0.2);
 }
-
-.contact{
-    text-align:center;
-}
-
-.contact a{
-    color:#38bdf8;
-}
 </style>
 </head>
 
 <body>
 
+<!-- PARTICLE CANVAS -->
+<canvas id="particles"></canvas>
+
 <header>
     <h1>Dhruv Pandya</h1>
     <h2>Artificial Intelligence & Technology Student</h2>
-
     <p>
         Passionate about Artificial Intelligence, Cybersecurity,
-        Software Development, Cloud Systems, Networking, and futuristic computing systems.
+        Software Development, Cloud Systems, and futuristic computing.
     </p>
-
-    <a href="#projects" class="btn">Explore My Work</a>
+    <a class="btn" href="#projects">Explore My Work</a>
 </header>
 
 <section>
     <h2 class="section-title">About Me</h2>
     <div class="card">
-        I am a Computer Science & IT student focused on Artificial Intelligence,
-        automation, and next-generation software systems.
+        Computer Science & IT student focused on Artificial Intelligence,
+        automation, and next-generation systems.
     </div>
 </section>
 
@@ -236,6 +235,7 @@ footer{
         <div class="skill">React</div>
         <div class="skill">Linux</div>
         <div class="skill">Networking</div>
+        <div class="skill">Cloud</div>
     </div>
 </section>
 
@@ -243,27 +243,25 @@ footer{
     <h2 class="section-title">Projects</h2>
 
     <div class="grid">
-
         <div class="project">
             <h3>AI Assistant System</h3>
-            <p>Intelligent automation system with voice interaction and task execution.</p>
+            <p>Intelligent automation and AI-based interaction system.</p>
         </div>
 
         <div class="project">
             <h3>Home Lab Infrastructure</h3>
-            <p>Self-hosted servers, networking, and cloud-like environment.</p>
+            <p>Self-hosted servers and networking environment.</p>
         </div>
 
         <div class="project">
             <h3>Cybersecurity Labs</h3>
-            <p>Ethical hacking, penetration testing, and vulnerability research.</p>
+            <p>Ethical hacking, penetration testing, and defense systems.</p>
         </div>
 
         <div class="project">
             <h3>Web Development</h3>
             <p>Modern responsive applications and UI systems.</p>
         </div>
-
     </div>
 </section>
 
@@ -277,6 +275,109 @@ footer{
 <footer>
     © 2026 Dhruv Pandya. All Rights Reserved.
 </footer>
+
+<script>
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particlesArray = [];
+const numberOfParticles = 90;
+
+let mouse = { x:null, y:null, radius:120 };
+
+window.addEventListener("mousemove", e=>{
+    mouse.x = e.x;
+    mouse.y = e.y;
+});
+
+window.addEventListener("resize", ()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    init();
+});
+
+class Particle{
+    constructor(x,y,dx,dy,size){
+        this.x=x;
+        this.y=y;
+        this.dx=dx;
+        this.dy=dy;
+        this.size=size;
+    }
+
+    draw(){
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+        ctx.fillStyle="rgba(0,229,255,0.8)";
+        ctx.shadowBlur=10;
+        ctx.shadowColor="#00e5ff";
+        ctx.fill();
+    }
+
+    update(){
+        if(this.x>canvas.width||this.x<0) this.dx=-this.dx;
+        if(this.y>canvas.height||this.y<0) this.dy=-this.dy;
+
+        let dx=mouse.x-this.x;
+        let dy=mouse.y-this.y;
+        let dist=Math.sqrt(dx*dx+dy*dy);
+
+        if(dist<mouse.radius){
+            this.x-=dx/20;
+            this.y-=dy/20;
+        }
+
+        this.x+=this.dx;
+        this.y+=this.dy;
+
+        this.draw();
+    }
+}
+
+function init(){
+    particlesArray=[];
+    for(let i=0;i<numberOfParticles;i++){
+        let size=Math.random()*2+1;
+        let x=Math.random()*canvas.width;
+        let y=Math.random()*canvas.height;
+        let dx=(Math.random()-0.5)*0.6;
+        let dy=(Math.random()-0.5)*0.6;
+        particlesArray.push(new Particle(x,y,dx,dy,size));
+    }
+}
+
+function connect(){
+    for(let a=0;a<particlesArray.length;a++){
+        for(let b=a;b<particlesArray.length;b++){
+            let dx=particlesArray[a].x-particlesArray[b].x;
+            let dy=particlesArray[a].y-particlesArray[b].y;
+            let dist=Math.sqrt(dx*dx+dy*dy);
+
+            if(dist<120){
+                ctx.beginPath();
+                ctx.strokeStyle="rgba(0,229,255,0.15)";
+                ctx.moveTo(particlesArray[a].x,particlesArray[a].y);
+                ctx.lineTo(particlesArray[b].x,particlesArray[b].y);
+                ctx.stroke();
+            }
+        }
+    }
+}
+
+function animate(){
+    requestAnimationFrame(animate);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    particlesArray.forEach(p=>p.update());
+    connect();
+}
+
+init();
+animate();
+</script>
 
 </body>
 </html>
