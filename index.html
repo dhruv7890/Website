@@ -4,39 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dhruv Pandya | AI Portfolio</title>
-
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+*{ margin:0; padding:0; box-sizing:border-box; }
 
 body{
     font-family:'Segoe UI', Arial, sans-serif;
     background: radial-gradient(circle at top, #020617, #000);
     color:white;
     overflow-x:hidden;
+    min-height:100vh;
 }
 
-/* ===== PARTICLE CANVAS ===== */
 #particles{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    z-index:-3;
+    position:fixed; top:0; left:0;
+    width:100%; height:100%; z-index:-3;
 }
 
-/* ===== BACKGROUND GLOW ===== */
 body::before{
     content:"";
-    position:fixed;
-    top:-50%;
-    left:-50%;
-    width:200%;
-    height:200%;
+    position:fixed; top:-50%; left:-50%;
+    width:200%; height:200%;
     background:
         radial-gradient(circle, rgba(0,229,255,0.12), transparent 40%),
         radial-gradient(circle at bottom right, rgba(124,58,237,0.12), transparent 40%);
@@ -50,35 +37,76 @@ body::before{
     100%{transform:translate(0,0);}
 }
 
-/* ===== HEADER ===== */
-header{
+/* ===== NAV ===== */
+nav{
+    position:fixed; top:0; left:0; width:100%; z-index:100;
+    display:flex; justify-content:center; align-items:center;
+    padding:14px 24px; gap:6px;
+    background:rgba(2,6,23,0.65);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(0,229,255,0.15);
+    flex-wrap:wrap;
+}
+
+nav button{
+    color:#94a3b8;
+    background:none;
+    border:1px solid transparent;
+    font-size:0.88rem;
+    font-weight:500;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    padding:7px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.25s;
+    font-family:inherit;
+}
+
+nav button:hover,
+nav button.active{
+    color:#00e5ff;
+    border-color:rgba(0,229,255,0.35);
+    background:rgba(0,229,255,0.07);
+    text-shadow:0 0 12px rgba(0,229,255,0.6);
+}
+
+/* ===== PAGES ===== */
+.page{
+    display:none;
     min-height:100vh;
-    display:flex;
+    padding-top:72px;
+    animation: fadeIn 0.4s ease;
+}
+.page.active{ display:block; }
+
+@keyframes fadeIn{
+    from{ opacity:0; transform:translateY(16px); }
+    to{ opacity:1; transform:translateY(0); }
+}
+
+/* ===== HOME PAGE ===== */
+#page-home{
+    display:none;
     flex-direction:column;
     justify-content:center;
     align-items:center;
     text-align:center;
-    padding:20px;
+    padding:100px 20px 40px;
 }
+#page-home.active{ display:flex; }
 
-header h1{
+#page-home h1{
     font-size:4rem;
     background: linear-gradient(90deg,#00e5ff,#3b82f6,#a855f7);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
 }
 
-header h2{
-    color:#38bdf8;
-    margin:10px 0 20px;
-}
+#page-home h2{ color:#38bdf8; margin:10px 0 20px; }
 
-header p{
-    max-width:700px;
-    color:#cbd5e1;
-}
+#page-home p{ max-width:700px; color:#cbd5e1; line-height:1.7; }
 
-/* ===== BUTTON ===== */
 .btn{
     display:inline-block;
     margin-top:25px;
@@ -89,28 +117,28 @@ header p{
     background:linear-gradient(90deg,#2563eb,#7c3aed);
     box-shadow:0 0 25px rgba(0,200,255,0.4);
     transition:0.3s;
+    cursor:pointer;
+    border:none;
+    font-family:inherit;
+    font-size:1rem;
 }
+.btn:hover{ transform:scale(1.05); box-shadow:0 0 40px rgba(0,229,255,0.6); }
 
-.btn:hover{
-    transform:scale(1.05);
-    box-shadow:0 0 40px rgba(0,229,255,0.6);
-}
-
-/* ===== SECTIONS ===== */
-section{
+/* ===== INNER PAGES ===== */
+.inner{
     max-width:1100px;
     margin:auto;
-    padding:80px 20px;
+    padding:60px 20px 80px;
 }
 
 .section-title{
-    text-align:center;
     font-size:2.5rem;
     margin-bottom:40px;
     color:#38bdf8;
+    text-align:center;
 }
 
-/* ===== HOLOGRAM CARDS ===== */
+/* ===== CARDS ===== */
 .card, .project{
     position:relative;
     background:rgba(10,15,30,0.6);
@@ -120,21 +148,19 @@ section{
     border:1px solid rgba(0,229,255,0.25);
     overflow:hidden;
     transition:0.3s;
+    line-height:1.7;
+    color:#cbd5e1;
 }
 
-/* glowing border animation */
 .card::before, .project::before{
     content:"";
-    position:absolute;
-    inset:0;
+    position:absolute; inset:0;
     border-radius:16px;
     padding:1px;
     background:linear-gradient(90deg,transparent,#00e5ff,#7c3aed,transparent);
     background-size:300% 300%;
     animation:borderMove 5s linear infinite;
-    -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite:xor;
     pointer-events:none;
 }
@@ -144,18 +170,11 @@ section{
     100%{background-position:100% 50%;}
 }
 
-/* scan line */
 .card::after, .project::after{
     content:"";
-    position:absolute;
-    top:-100%;
-    left:0;
-    width:100%;
-    height:200%;
-    background:linear-gradient(to bottom,
-        transparent,
-        rgba(0,229,255,0.08),
-        transparent);
+    position:absolute; top:-100%; left:0;
+    width:100%; height:200%;
+    background:linear-gradient(to bottom, transparent, rgba(0,229,255,0.08), transparent);
     animation:scan 4s linear infinite;
     pointer-events:none;
 }
@@ -165,11 +184,8 @@ section{
     100%{transform:translateY(50%);}
 }
 
-.card:hover, .project:hover{
-    transform:translateY(-6px);
-}
+.card:hover, .project:hover{ transform:translateY(-6px); }
 
-/* ===== GRID ===== */
 .grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
@@ -178,10 +194,8 @@ section{
 
 /* ===== SKILLS ===== */
 .skills{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    justify-content:center;
+    display:flex; flex-wrap:wrap;
+    gap:10px; justify-content:center;
 }
 
 .skill{
@@ -189,94 +203,314 @@ section{
     border-radius:20px;
     background:rgba(0,229,255,0.08);
     border:1px solid rgba(0,229,255,0.25);
+    color:#e2e8f0;
+}
+
+/* ===== DEGREE CARDS ===== */
+.degree-card{
+    position:relative;
+    background:rgba(10,15,30,0.6);
+    backdrop-filter:blur(14px);
+    border-radius:16px;
+    padding:28px 30px;
+    border:1px solid rgba(124,58,237,0.3);
+    overflow:hidden;
+    transition:0.3s;
+    display:flex; flex-direction:column; gap:8px;
+}
+
+.degree-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(124,58,237,0.6);
+    box-shadow:0 0 30px rgba(124,58,237,0.2);
+}
+
+.degree-card::after{
+    content:"";
+    position:absolute; top:-100%; left:0;
+    width:100%; height:200%;
+    background:linear-gradient(to bottom, transparent, rgba(124,58,237,0.06), transparent);
+    animation:scan 5s linear infinite;
+    pointer-events:none;
+}
+
+.degree-badge{
+    display:inline-block;
+    font-size:0.75rem; font-weight:600;
+    letter-spacing:0.08em; text-transform:uppercase;
+    padding:4px 12px; border-radius:20px;
+    background:rgba(124,58,237,0.18);
+    border:1px solid rgba(124,58,237,0.4);
+    color:#a78bfa; width:fit-content; margin-bottom:4px;
+}
+
+.degree-card h3{ font-size:1.15rem; color:#e2e8f0; }
+.degree-card .school{ color:#38bdf8; font-size:0.95rem; }
+.degree-card .year{ color:#64748b; font-size:0.85rem; }
+.degree-card p{ color:#94a3b8; font-size:0.9rem; line-height:1.5; margin-top:4px; }
+
+/* ===== ABOUT ===== */
+.about-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:20px;
+}
+@media(max-width:640px){ .about-grid{ grid-template-columns:1fr; } }
+
+.about-stat{
+    background:rgba(10,15,30,0.6);
+    backdrop-filter:blur(14px);
+    border-radius:16px;
+    padding:24px;
+    border:1px solid rgba(0,229,255,0.2);
+    text-align:center;
+}
+.about-stat .num{
+    font-size:2.2rem; font-weight:700;
+    background:linear-gradient(90deg,#00e5ff,#a855f7);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.about-stat .label{ color:#94a3b8; font-size:0.9rem; margin-top:4px; }
+
+/* ===== CONTACT ===== */
+.contact-link{
+    display:flex; align-items:center; gap:12px;
+    background:rgba(10,15,30,0.6);
+    backdrop-filter:blur(14px);
+    border-radius:16px; padding:20px 24px;
+    border:1px solid rgba(0,229,255,0.2);
+    color:#cbd5e1; text-decoration:none;
+    transition:0.25s; margin-bottom:12px;
+}
+.contact-link:hover{
+    border-color:rgba(0,229,255,0.5);
+    color:#00e5ff;
+    transform:translateX(6px);
+}
+.contact-icon{ font-size:1.4rem; }
+
+/* ===== PROJECT TAGS ===== */
+.project h3{ margin-bottom:8px; color:#e2e8f0; }
+.project p{ color:#94a3b8; margin-bottom:12px; line-height:1.6; }
+.tags{ display:flex; flex-wrap:wrap; gap:6px; }
+.tag{
+    font-size:0.75rem; padding:3px 10px;
+    border-radius:20px;
+    background:rgba(56,189,248,0.1);
+    border:1px solid rgba(56,189,248,0.25);
+    color:#38bdf8;
 }
 
 /* ===== FOOTER ===== */
 footer{
-    text-align:center;
-    padding:40px;
-    background:#020617;
-    color:#94a3b8;
-    border-top:1px solid rgba(0,229,255,0.2);
+    text-align:center; padding:30px;
+    background:#020617; color:#94a3b8;
+    border-top:1px solid rgba(0,229,255,0.15);
 }
 </style>
 </head>
-
 <body>
 
-<!-- PARTICLE CANVAS -->
 <canvas id="particles"></canvas>
 
-<header>
+<!-- ===== NAV ===== -->
+<nav id="navbar">
+    <button onclick="showPage('home')"     class="active" data-page="home">Home</button>
+    <button onclick="showPage('about')"    data-page="about">About</button>
+    <button onclick="showPage('degrees')"  data-page="degrees">Degrees</button>
+    <button onclick="showPage('skills')"   data-page="skills">Skills</button>
+    <button onclick="showPage('projects')" data-page="projects">Projects</button>
+    <button onclick="showPage('contact')"  data-page="contact">Contact</button>
+</nav>
+
+<!-- ===== HOME PAGE ===== -->
+<div class="page active" id="page-home">
     <h1>Dhruv Pandya</h1>
     <h2>Artificial Intelligence & Technology Student</h2>
-    <p>
-        Passionate about Artificial Intelligence, Cybersecurity,
-        Software Development, Cloud Systems, and futuristic computing.
-    </p>
-    <a class="btn" href="#projects">Explore My Work</a>
-</header>
+    <p>Passionate about Artificial Intelligence, Cybersecurity, Software Development, Cloud Systems, and futuristic computing.</p>
+    <button class="btn" onclick="showPage('projects')">Explore My Work</button>
+</div>
 
-<section>
-    <h2 class="section-title">About Me</h2>
-    <div class="card">
-        Computer Science & IT student focused on Artificial Intelligence,
-        automation, and next-generation systems.
-    </div>
-</section>
-
-<section>
-    <h2 class="section-title">Skills</h2>
-    <div class="skills">
-        <div class="skill">Python</div>
-        <div class="skill">AI</div>
-        <div class="skill">Machine Learning</div>
-        <div class="skill">Cybersecurity</div>
-        <div class="skill">React</div>
-        <div class="skill">Linux</div>
-        <div class="skill">Networking</div>
-        <div class="skill">Cloud</div>
-    </div>
-</section>
-
-<section id="projects">
-    <h2 class="section-title">Projects</h2>
-
-    <div class="grid">
-        <div class="project">
-            <h3>AI Assistant System</h3>
-            <p>Intelligent automation and AI-based interaction system.</p>
+<!-- ===== ABOUT PAGE ===== -->
+<div class="page" id="page-about">
+    <div class="inner">
+        <h2 class="section-title">About Me</h2>
+        <div class="card" style="margin-bottom:24px;">
+            Computer Science & IT student focused on Artificial Intelligence, automation, and next-generation systems. I enjoy building tools that sit at the intersection of security and intelligent computing — from home lab infrastructure to AI-driven applications.
         </div>
-
-        <div class="project">
-            <h3>Home Lab Infrastructure</h3>
-            <p>Self-hosted servers and networking environment.</p>
-        </div>
-
-        <div class="project">
-            <h3>Cybersecurity Labs</h3>
-            <p>Ethical hacking, penetration testing, and defense systems.</p>
-        </div>
-
-        <div class="project">
-            <h3>Web Development</h3>
-            <p>Modern responsive applications and UI systems.</p>
+        <div class="about-grid">
+            <div class="about-stat">
+                <div class="num">3+</div>
+                <div class="label">Years Coding</div>
+            </div>
+            <div class="about-stat">
+                <div class="num">4</div>
+                <div class="label">Major Projects</div>
+            </div>
+            <div class="about-stat">
+                <div class="num">2</div>
+                <div class="label">Certifications</div>
+            </div>
+            <div class="about-stat">
+                <div class="num">∞</div>
+                <div class="label">Curiosity</div>
+            </div>
         </div>
     </div>
-</section>
+</div>
 
-<section>
-    <h2 class="section-title">Contact</h2>
-    <div class="card">
-        GitHub: github.com/dhruv7890
+<!-- ===== DEGREES PAGE ===== -->
+<div class="page" id="page-degrees">
+    <div class="inner">
+        <h2 class="section-title">Degrees & Education</h2>
+        <div class="grid">
+
+            <div class="degree-card">
+                <span class="degree-badge">In Progress</span>
+                <h3>B.S. Computer Science</h3>
+                <div class="school">Your University Name</div>
+                <div class="year">Expected 2027</div>
+                <p>Specialization in Artificial Intelligence and Machine Learning. Coursework includes deep learning, algorithms, and distributed systems.</p>
+            </div>
+
+            <div class="degree-card">
+                <span class="degree-badge">Certification</span>
+                <h3>CompTIA Security+</h3>
+                <div class="school">CompTIA</div>
+                <div class="year">2025</div>
+                <p>Industry-recognized certification covering core cybersecurity skills, network defense, and threat management.</p>
+            </div>
+
+            <div class="degree-card">
+                <span class="degree-badge">Certification</span>
+                <h3>AWS Cloud Practitioner</h3>
+                <div class="school">Amazon Web Services</div>
+                <div class="year">2024</div>
+                <p>Foundational understanding of AWS cloud services, architecture, security, and pricing models.</p>
+            </div>
+
+        </div>
     </div>
-</section>
+</div>
 
-<footer>
-    © 2026 Dhruv Pandya. All Rights Reserved.
-</footer>
+<!-- ===== SKILLS PAGE ===== -->
+<div class="page" id="page-skills">
+    <div class="inner">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills">
+            <div class="skill">Python</div>
+            <div class="skill">Artificial Intelligence</div>
+            <div class="skill">Machine Learning</div>
+            <div class="skill">Cybersecurity</div>
+            <div class="skill">React</div>
+            <div class="skill">Linux</div>
+            <div class="skill">Networking</div>
+            <div class="skill">Cloud</div>
+            <div class="skill">Bash / Shell</div>
+            <div class="skill">Git</div>
+            <div class="skill">Docker</div>
+            <div class="skill">Penetration Testing</div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== PROJECTS PAGE ===== -->
+<div class="page" id="page-projects">
+    <div class="inner">
+        <h2 class="section-title">Projects</h2>
+        <div class="grid">
+
+            <div class="project">
+                <h3>AI Assistant System</h3>
+                <p>Intelligent automation and AI-based interaction system with natural language processing capabilities.</p>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">NLP</span>
+                    <span class="tag">AI</span>
+                </div>
+            </div>
+
+            <div class="project">
+                <h3>Home Lab Infrastructure</h3>
+                <p>Self-hosted servers and networking environment for testing and development.</p>
+                <div class="tags">
+                    <span class="tag">Linux</span>
+                    <span class="tag">Networking</span>
+                    <span class="tag">Docker</span>
+                </div>
+            </div>
+
+            <div class="project">
+                <h3>Cybersecurity Labs</h3>
+                <p>Ethical hacking, penetration testing, and defense systems research environment.</p>
+                <div class="tags">
+                    <span class="tag">Pen Testing</span>
+                    <span class="tag">Security</span>
+                    <span class="tag">Kali Linux</span>
+                </div>
+            </div>
+
+            <div class="project">
+                <h3>Web Development</h3>
+                <p>Modern responsive applications and UI systems built with cutting-edge frameworks.</p>
+                <div class="tags">
+                    <span class="tag">React</span>
+                    <span class="tag">HTML/CSS</span>
+                    <span class="tag">JS</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ===== CONTACT PAGE ===== -->
+<div class="page" id="page-contact">
+    <div class="inner">
+        <h2 class="section-title">Contact</h2>
+        <a class="contact-link" href="https://github.com/dhruv7890" target="_blank">
+            <span class="contact-icon">🐙</span>
+            <div>
+                <div style="font-weight:600;color:#e2e8f0;">GitHub</div>
+                <div style="font-size:0.85rem;color:#64748b;">github.com/dhruv7890</div>
+            </div>
+        </a>
+        <a class="contact-link" href="mailto:your@email.com">
+            <span class="contact-icon">✉️</span>
+            <div>
+                <div style="font-weight:600;color:#e2e8f0;">Email</div>
+                <div style="font-size:0.85rem;color:#64748b;">your@email.com</div>
+            </div>
+        </a>
+        <a class="contact-link" href="https://linkedin.com" target="_blank">
+            <span class="contact-icon">💼</span>
+            <div>
+                <div style="font-weight:600;color:#e2e8f0;">LinkedIn</div>
+                <div style="font-size:0.85rem;color:#64748b;">linkedin.com/in/yourprofile</div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<footer>© 2026 Dhruv Pandya. All Rights Reserved.</footer>
 
 <script>
+/* ===== PAGE ROUTING ===== */
+function showPage(name){
+    // hide all pages
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    // show target
+    const target = document.getElementById('page-' + name);
+    if(target) target.classList.add('active');
+    // update nav
+    document.querySelectorAll('nav button').forEach(b => {
+        b.classList.toggle('active', b.dataset.page === name);
+    });
+    // scroll to top
+    window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+/* ===== PARTICLES ===== */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
@@ -285,54 +519,27 @@ canvas.height = window.innerHeight;
 
 let particlesArray = [];
 const numberOfParticles = 90;
-
 let mouse = { x:null, y:null, radius:120 };
 
-window.addEventListener("mousemove", e=>{
-    mouse.x = e.x;
-    mouse.y = e.y;
-});
-
-window.addEventListener("resize", ()=>{
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    init();
-});
+window.addEventListener("mousemove", e=>{ mouse.x=e.x; mouse.y=e.y; });
+window.addEventListener("resize", ()=>{ canvas.width=window.innerWidth; canvas.height=window.innerHeight; init(); });
 
 class Particle{
-    constructor(x,y,dx,dy,size){
-        this.x=x;
-        this.y=y;
-        this.dx=dx;
-        this.dy=dy;
-        this.size=size;
-    }
-
+    constructor(x,y,dx,dy,size){ this.x=x; this.y=y; this.dx=dx; this.dy=dy; this.size=size; }
     draw(){
         ctx.beginPath();
         ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
         ctx.fillStyle="rgba(0,229,255,0.8)";
-        ctx.shadowBlur=10;
-        ctx.shadowColor="#00e5ff";
+        ctx.shadowBlur=10; ctx.shadowColor="#00e5ff";
         ctx.fill();
     }
-
     update(){
         if(this.x>canvas.width||this.x<0) this.dx=-this.dx;
         if(this.y>canvas.height||this.y<0) this.dy=-this.dy;
-
-        let dx=mouse.x-this.x;
-        let dy=mouse.y-this.y;
+        let dx=mouse.x-this.x, dy=mouse.y-this.y;
         let dist=Math.sqrt(dx*dx+dy*dy);
-
-        if(dist<mouse.radius){
-            this.x-=dx/20;
-            this.y-=dy/20;
-        }
-
-        this.x+=this.dx;
-        this.y+=this.dy;
-
+        if(dist<mouse.radius){ this.x-=dx/20; this.y-=dy/20; }
+        this.x+=this.dx; this.y+=this.dy;
         this.draw();
     }
 }
@@ -340,12 +547,11 @@ class Particle{
 function init(){
     particlesArray=[];
     for(let i=0;i<numberOfParticles;i++){
-        let size=Math.random()*2+1;
-        let x=Math.random()*canvas.width;
-        let y=Math.random()*canvas.height;
-        let dx=(Math.random()-0.5)*0.6;
-        let dy=(Math.random()-0.5)*0.6;
-        particlesArray.push(new Particle(x,y,dx,dy,size));
+        particlesArray.push(new Particle(
+            Math.random()*canvas.width, Math.random()*canvas.height,
+            (Math.random()-0.5)*0.6, (Math.random()-0.5)*0.6,
+            Math.random()*2+1
+        ));
     }
 }
 
@@ -354,9 +560,7 @@ function connect(){
         for(let b=a;b<particlesArray.length;b++){
             let dx=particlesArray[a].x-particlesArray[b].x;
             let dy=particlesArray[a].y-particlesArray[b].y;
-            let dist=Math.sqrt(dx*dx+dy*dy);
-
-            if(dist<120){
+            if(Math.sqrt(dx*dx+dy*dy)<120){
                 ctx.beginPath();
                 ctx.strokeStyle="rgba(0,229,255,0.15)";
                 ctx.moveTo(particlesArray[a].x,particlesArray[a].y);
@@ -370,7 +574,6 @@ function connect(){
 function animate(){
     requestAnimationFrame(animate);
     ctx.clearRect(0,0,canvas.width,canvas.height);
-
     particlesArray.forEach(p=>p.update());
     connect();
 }
@@ -378,6 +581,5 @@ function animate(){
 init();
 animate();
 </script>
-
 </body>
 </html>
