@@ -6,7 +6,941 @@
 <title>Dhruv Pandya | Portfolio</title>
 <style>
 *{ margin:0; padding:0; box-sizing:border-box; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhruv Pandya | Portfolio</title>
+<style>
 
+/* =========================================================
+   GLOBAL RESET
+   Removes all default browser margin/padding and sets
+   box-sizing to border-box so padding/borders don't add
+   extra width to elements.
+   ========================================================= */
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+/* =========================================================
+   BODY — BASE STYLES
+   Sets the primary font, a deep dark radial gradient
+   background (near-black at the top, pure black at the
+   bottom), white text, and hides horizontal overflow so
+   animated elements don't create a scrollbar.
+   ========================================================= */
+body{
+    font-family:'Segoe UI', Arial, sans-serif;
+    background: radial-gradient(circle at top, #020617, #000);
+    color:white;
+    overflow-x:hidden;
+    min-height:100vh;
+}
+
+/* =========================================================
+   PARTICLE CANVAS
+   Fixed behind all content (z-index: -3). The canvas is
+   drawn on by the JS particle system to produce the
+   floating cyan dots and connecting lines.
+   ========================================================= */
+#particles{
+    position:fixed; top:0; left:0;
+    width:100%; height:100%; z-index:-3;
+}
+
+/* =========================================================
+   AMBIENT GLOW OVERLAY
+   A pseudo-element attached to the body. It creates two
+   soft radial gradients — a cyan glow in the top-left and
+   a purple glow in the bottom-right — that slowly drift
+   using the floatGlow animation for a living background.
+   Sits at z-index: -2 so it's above the canvas but behind
+   all page content.
+   ========================================================= */
+body::before{
+    content:"";
+    position:fixed; top:-50%; left:-50%;
+    width:200%; height:200%;
+    background:
+        radial-gradient(circle, rgba(0,229,255,0.12), transparent 40%),
+        radial-gradient(circle at bottom right, rgba(124,58,237,0.12), transparent 40%);
+    animation: floatGlow 14s linear infinite;
+    z-index:-2;
+}
+
+/* =========================================================
+   FLOAT GLOW ANIMATION
+   Slowly translates the ambient overlay a few percent in
+   both axes and back, giving the impression the light
+   source is breathing/drifting.
+   ========================================================= */
+@keyframes floatGlow{
+    0%{transform:translate(0,0);}
+    50%{transform:translate(3%,5%);}
+    100%{transform:translate(0,0);}
+}
+
+/* ==========================================================
+   NAVIGATION BAR
+   Fixed to the top of the viewport at z-index 100 so it
+   always sits above page content. Uses flexbox to centre
+   the nav buttons horizontally with a small gap between
+   them. The semi-transparent dark background + backdrop
+   blur creates a frosted-glass effect. The bottom border
+   gives a subtle cyan accent line.
+   ========================================================= */
+nav{
+    position:fixed; top:0; left:0; width:100%; z-index:100;
+    display:flex; justify-content:center; align-items:center;
+    padding:14px 24px; gap:6px;
+    background:rgba(2,6,23,0.65);    /* dark navy at 65% opacity */
+    backdrop-filter:blur(18px);      /* frosted-glass blur */
+    border-bottom:1px solid rgba(0,229,255,0.15);
+    flex-wrap:wrap;                  /* wrap on very narrow screens */
+}
+
+/* =========================================================
+   NAV BUTTONS
+   Styled as ghost buttons (transparent background, no
+   border by default) with uppercase small-caps text.
+   Uses a transparent border placeholder so the button
+   doesn't shift size when the border appears on hover.
+   ========================================================= */
+nav button{
+    color:#94a3b8;
+    background:none;
+    border:1px solid transparent;
+    font-size:0.88rem;
+    font-weight:500;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    padding:7px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.25s;
+    font-family:inherit;
+}
+
+/* =========================================================
+   NAV BUTTON — HOVER & ACTIVE STATE
+   Lights the button up with cyan text, a subtle cyan
+   border, a very light cyan background tint, and a text
+   glow. The .active class is added by JS to the button
+   matching the current page.
+   ========================================================= */
+nav button:hover,
+nav button.active{
+    color:#00e5ff;
+    border-color:rgba(0,229,255,0.35);
+    background:rgba(0,229,255,0.07);
+    text-shadow:0 0 12px rgba(0,229,255,0.6);
+}
+
+/* =========================================================
+   PAGE CONTAINERS
+   Each section of the site is a .page div. By default all
+   are hidden (display:none). The JS router adds .active to
+   whichever section should be visible, which overrides
+   display:none and triggers the fadeIn animation.
+   padding-top:72px offsets the fixed navbar height so
+   content doesn't hide beneath it.
+   ========================================================= */
+.page{
+    display:none;
+    min-height:100vh;
+    padding-top:72px;
+    animation: fadeIn 0.4s ease; /* smooth entrance when shown */
+}
+.page.active{ display:block; }
+
+/* =========================================================
+   FADE-IN ANIMATION
+   Runs when a page becomes active. Slides content up 16px
+   while fading from transparent to opaque for a polished
+   page-transition feel.
+   ========================================================= */
+@keyframes fadeIn{
+    from{ opacity:0; transform:translateY(16px); }
+    to{ opacity:1; transform:translateY(0); }
+}
+
+/* =========================================================
+   HOME PAGE — LAYOUT OVERRIDE
+   The home page uses a centred flexbox column layout
+   instead of the standard block display. We override
+   display:none with display:flex when .active is added.
+   Extra top padding gives generous breathing room under
+   the navbar.
+   ========================================================= */
+#page-home{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:100px 20px 40px;
+}
+#page-home.active{ display:flex; }
+
+/* =========================================================
+   HOME PAGE — HERO HEADLINE
+   Large gradient text using the CSS background-clip trick:
+   a gradient is applied as the background, then clipped to
+   the text shape. The gradient goes cyan → blue → purple.
+   ========================================================= */
+#page-home h1{
+    font-size:4rem;
+    background: linear-gradient(90deg,#00e5ff,#3b82f6,#a855f7);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* Home page sub-heading (role/title line) */
+#page-home h2{ color:#38bdf8; margin:10px 0 20px; }
+
+/* Home page description paragraph — slightly muted colour,
+   constrained width, and relaxed line-height for readability */
+#page-home p{ max-width:700px; color:#cbd5e1; line-height:1.7; }
+
+/* =========================================================
+   CTA / PRIMARY BUTTON (.btn)
+   Shared class used for the "Explore My Work" button.
+   Blue-to-purple gradient fill with a glowing cyan box
+   shadow. Scales up slightly on hover and brightens the
+   glow for a tactile feel.
+   ========================================================= */
+.btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:12px 28px;
+    border-radius:12px;
+    text-decoration:none;
+    color:white;
+    background:linear-gradient(90deg,#2563eb,#7c3aed);
+    box-shadow:0 0 25px rgba(0,200,255,0.4);
+    transition:0.3s;
+    cursor:pointer;
+    border:none;
+    font-family:inherit;
+    font-size:1rem;
+}
+.btn:hover{ transform:scale(1.05); box-shadow:0 0 40px rgba(0,229,255,0.6); }
+
+/* =========================================================
+   INNER CONTENT WRAPPER
+   Centres page content, caps maximum width at 1100px, and
+   adds comfortable vertical padding above and below.
+   Used on every inner page (About, Degrees, Skills, etc.).
+   ========================================================= */
+.inner{
+    max-width:1100px;
+    margin:auto;
+    padding:60px 20px 80px;
+}
+
+/* =========================================================
+   SECTION TITLES
+   Large, centred, sky-blue headings that introduce each
+   page section.
+   ========================================================= */
+.section-title{
+    font-size:2.5rem;
+    margin-bottom:40px;
+    color:#38bdf8;
+    text-align:center;
+}
+
+/* =========================================================
+   CARD & PROJECT — BASE STYLES
+   Shared "glass card" appearance:
+   - Very dark semi-transparent background
+   - backdrop-filter blur for the frosted-glass look
+   - Rounded corners and a subtle cyan border
+   - overflow:hidden so the pseudo-element glow effects
+     stay clipped inside the card boundary
+   - Smooth lift on hover via translateY transition
+   ========================================================= */
+.card, .project{
+    position:relative;
+    background:rgba(10,15,30,0.6);
+    backdrop-filter:blur(14px);
+    border-radius:16px;
+    padding:25px;
+    border:1px solid rgba(0,229,255,0.25);
+    overflow:hidden;
+    transition:0.3s;
+    line-height:1.7;
+    color:#cbd5e1;
+}
+
+/* =========================================================
+   ANIMATED RAINBOW BORDER (::before pseudo-element)
+   Creates an animated gradient that travels around the
+   card border. Technique:
+   1. The ::before element fills the entire card (inset:0).
+   2. 1px padding creates the visible border region.
+   3. A -webkit-mask with xor composite cuts out the centre
+      so only the 1px border ring shows the gradient.
+   4. background-size:300% allows backgroundPosition
+      animation to shift the gradient across the element.
+   ========================================================= */
+.card::before, .project::before{
+    content:"";
+    position:absolute; inset:0;
+    border-radius:16px;
+    padding:1px;
+    background:linear-gradient(90deg,transparent,#00e5ff,#7c3aed,transparent);
+    background-size:300% 300%;
+    animation:borderMove 5s linear infinite;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; /* show only the padding ring */
+    pointer-events:none;        /* don't block mouse interactions */
+}
+
+/* Moves the gradient along the border continuously */
+@keyframes borderMove{
+    0%{background-position:0% 50%;}
+    100%{background-position:100% 50%;}
+}
+
+/* =========================================================
+   SCAN LINE EFFECT (::after pseudo-element)
+   A translucent light band that travels top-to-bottom
+   across the card, evoking a retro CRT/hologram scanner.
+   The element is 200% tall so the band enters and exits
+   cleanly without a visible jump.
+   ========================================================= */
+.card::after, .project::after{
+    content:"";
+    position:absolute; top:-100%; left:0;
+    width:100%; height:200%;
+    background:linear-gradient(to bottom, transparent, rgba(0,229,255,0.08), transparent);
+    animation:scan 4s linear infinite;
+    pointer-events:none;
+}
+
+/* Translates the scan band from above the card to below it */
+@keyframes scan{
+    0%{transform:translateY(-50%);}
+    100%{transform:translateY(50%);}
+}
+
+/* Lifts the card on hover for a clickable, depth feel */
+.card:hover, .project:hover{ transform:translateY(-6px); }
+
+/* =========================================================
+   RESPONSIVE GRID
+   Auto-fills columns with a minimum width of 280px.
+   Items wrap to the next row when the viewport is too
+   narrow to fit another column. Used for projects and
+   degree cards.
+   ========================================================= */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+}
+
+/* =========================================================
+   SKILLS PILL LIST
+   Flexbox row that wraps onto multiple lines. Each pill
+   (.skill) has a subtle cyan-tinted background and border
+   to match the site's colour palette.
+   ========================================================= */
+.skills{
+    display:flex; flex-wrap:wrap;
+    gap:10px; justify-content:center;
+}
+
+.skill{
+    padding:10px 15px;
+    border-radius:20px;
+    background:rgba(0,229,255,0.08);   /* very light cyan tint */
+    border:1px solid rgba(0,229,255,0.25);
+    color:#e2e8f0;
+}
+
+/* =========================================================
+   DEGREE / EDUCATION CARDS
+   Variant card style with a purple accent colour instead
+   of cyan, to visually distinguish education from
+   projects. Hover intensifies the border and adds a
+   purple glow shadow.
+   ========================================================= */
+.degree-card{
+    position:relative;
+    background:rgba(10,15,30,0.6);
+    backdrop-filter:blur(14px);
+    border-radius:16px;
+    padding:28px 30px;
+    border:1px solid rgba(124,58,237,0.3);
+    overflow:hidden;
+    transition:0.3s;
+    display:flex; flex-direction:column; gap:8px;
+}
+
+.degree-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(124,58,237,0.6);
+    box-shadow:0 0 30px rgba(124,58,237,0.2);
+}
+
+/* Purple-tinted scan line for degree cards (reuses ::after pattern) */
+.degree-card::after{
+    content:"";
+    position:absolute; top:-100%; left:0;
+    width:100%; height:200%;
+    background:linear-gradient(to bottom, transparent, rgba(124,58,237,0.06), transparent);
+    animation:scan 5s linear infinite;
+    pointer-events:none;
+}
+
+/* =========================================================
+   DEGREE BADGE
+   Small status pill displayed at the top of each degree
+   card (e.g. "In Progress", "Certification"). Uses a
+   purple theme to match the card accent colour.
+   ========================================================= */
+.degree-badge{
+    display:inline-block;
+    font-size:0.75rem; font-weight:600;
+    letter-spacing:0.08em; text-transform:uppercase;
+    padding:4px 12px; border-radius:20px;
+    background:rgba(124,58,237,0.18);
+    border:1px solid rgba(124,58,237,0.4);
+    color:#a78bfa; width:fit-content; margin-bottom:4px;
+}
+
+/* Degree card typography hierarchy */
+.degree-card h3{ font-size:1.15rem; color:#e2e8f0; }  /* Degree/cert name */
+.degree-card .school{ color:#38bdf8; font-size:0.95rem; }  /* Institution name */
+.degree-card .year{ color:#64748b; font-size:0.85rem; }    /* Year / date range */
+.degree-card p{ color:#94a3b8; font-size:0.9rem; line-height:1.5; margin-top:4px; } /* Description */
+
+/* =========================================================
+   ABOUT PAGE — TWO-COLUMN STATS GRID
+   Switches to single column on screens narrower than 640px
+   using a media query.
+   ========================================================= */
+.about-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:20px;
+}
+@media(max-width:640px){ .about-grid{ grid-template-columns:1fr; } }
+
+/* =========================================================
+   ABOUT STAT TILES
+   Each tile shows a large gradient number (.num) above a
+   muted label (.label). The background and border follow
+   the same glass-card pattern as the rest of the site.
+   ========================================================= */
+.about-stat{
+    background:rgba(10,15,30,0.6);
+    backdrop-filter:blur(14px);
+    border-radius:16px;
+    padding:24px;
+    border:1px solid rgba(0,229,255,0.2);
+    text-align:center;
+}
+.about-stat .num{
+    font-size:2.2rem; font-weight:700;
+    background:linear-gradient(90deg,#00e5ff,#a855f7); /* cyan → purple gradient */
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.about-stat .label{ color:#94a3b8; font-size:0.9rem; margin-top:4px; }
+
+/* =========================================================
+   CONTACT LINK ROWS
+   Each contact method (GitHub, Email, LinkedIn) is a
+   full-width anchor styled as a card row. The icon and
+   text sit side by side with flexbox. On hover, the whole
+   row slides right 6px and highlights cyan.
+   ========================================================= */
+.contact-link{
+    display:flex; align-items:center; gap:12px;
+    background:rgba(10,15,30,0.6);
+    backdrop-filter:blur(14px);
+    border-radius:16px; padding:20px 24px;
+    border:1px solid rgba(0,229,255,0.2);
+    color:#cbd5e1; text-decoration:none;
+    transition:0.25s; margin-bottom:12px;
+}
+.contact-link:hover{
+    border-color:rgba(0,229,255,0.5);
+    color:#00e5ff;
+    transform:translateX(6px); /* slide right on hover */
+}
+.contact-icon{ font-size:1.4rem; } /* emoji icon size */
+
+/* =========================================================
+   PROJECT CARD TYPOGRAPHY
+   h3 = project title, p = short description text.
+   ========================================================= */
+.project h3{ margin-bottom:8px; color:#e2e8f0; }
+.project p{ color:#94a3b8; margin-bottom:12px; line-height:1.6; }
+
+/* =========================================================
+   TECHNOLOGY TAGS
+   Small pill labels listed under each project card,
+   indicating languages/tools used. Sky-blue tint on both
+   the background and border.
+   ========================================================= */
+.tags{ display:flex; flex-wrap:wrap; gap:6px; }
+.tag{
+    font-size:0.75rem; padding:3px 10px;
+    border-radius:20px;
+    background:rgba(56,189,248,0.1);
+    border:1px solid rgba(56,189,248,0.25);
+    color:#38bdf8;
+}
+
+/* =========================================================
+   FOOTER
+   Simple centred copyright bar at the bottom. Dark
+   background matching the body with a subtle top border
+   matching the navbar's bottom border.
+   ========================================================= */
+footer{
+    text-align:center; padding:30px;
+    background:#020617; color:#94a3b8;
+    border-top:1px solid rgba(0,229,255,0.15);
+}
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     PARTICLE CANVAS
+     The <canvas> element that the JS particle system draws
+     on. Positioned fixed behind all content via CSS.
+     ========================================================= -->
+<canvas id="particles"></canvas>
+
+<!-- =========================================================
+     NAVIGATION BAR
+     Six buttons, one per page. Each has a data-page
+     attribute that matches the corresponding page ID
+     (e.g. data-page="home" → #page-home). The JS router
+     uses this attribute to toggle the .active class.
+     The "Home" button starts with .active since the home
+     page is shown on first load.
+     ========================================================= -->
+<nav id="navbar">
+    <button onclick="showPage('home')"     class="active" data-page="home">Home</button>
+    <button onclick="showPage('about')"    data-page="about">About</button>
+    <button onclick="showPage('degrees')"  data-page="degrees">Degrees</button>
+    <button onclick="showPage('skills')"   data-page="skills">Skills</button>
+    <button onclick="showPage('projects')" data-page="projects">Projects</button>
+    <button onclick="showPage('contact')"  data-page="contact">Contact</button>
+</nav>
+
+<!-- =========================================================
+     HOME PAGE
+     Hero section with name, title, description, and a CTA
+     button that navigates to the Projects page.
+     ========================================================= -->
+<div class="page active" id="page-home">
+    <h1>Dhruv Pandya</h1>
+    <h2>Artificial Intelligence & Technology Student</h2>
+    <p>Passionate about Artificial Intelligence, Cybersecurity, Software Development, Cloud Systems, and futuristic computing.</p>
+    <!-- Calls showPage() to switch to the projects section -->
+    <button class="btn" onclick="showPage('projects')">Explore My Work</button>
+</div>
+
+<!-- =========================================================
+     ABOUT PAGE
+     Short bio paragraph followed by a 2×2 grid of stat
+     tiles showing years of coding, projects, certifications,
+     and an "infinite curiosity" easter egg.
+     ========================================================= -->
+<div class="page" id="page-about">
+    <div class="inner">
+        <h2 class="section-title">About Me</h2>
+
+        <!-- Bio card — uses the shared .card glass style -->
+        <div class="card" style="margin-bottom:24px;">
+            Computer Science & IT student focused on Artificial Intelligence, automation, and next-generation systems. I enjoy building tools that sit at the intersection of security and intelligent computing — from home lab infrastructure to AI-driven applications.
+        </div>
+
+        <!-- 2×2 stat grid -->
+        <div class="about-grid">
+            <div class="about-stat">
+                <div class="num">3+</div>
+                <div class="label">Years Coding</div>
+            </div>
+            <div class="about-stat">
+                <div class="num">4</div>
+                <div class="label">Major Projects</div>
+            </div>
+            <div class="about-stat">
+                <div class="num">2</div>
+                <div class="label">Certifications</div>
+            </div>
+            <div class="about-stat">
+                <!-- ∞ symbol rendered as-is; CSS gradient clips it -->
+                <div class="num">∞</div>
+                <div class="label">Curiosity</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================
+     DEGREES PAGE
+     Auto-fill grid of degree/certification cards.
+     Each card has:
+     - A coloured badge (status pill)
+     - Degree/cert name (h3)
+     - Institution name (.school)
+     - Year (.year)
+     - Short description (p)
+     ========================================================= -->
+<div class="page" id="page-degrees">
+    <div class="inner">
+        <h2 class="section-title">Degrees & Education</h2>
+        <div class="grid">
+
+            <!-- B.S. Computer Science — currently in progress -->
+            <div class="degree-card">
+                <span class="degree-badge">In Progress</span>
+                <h3>B.S. Computer Science</h3>
+                <div class="school">Your University Name</div>
+                <div class="year">Expected 2027</div>
+                <p>Specialization in Artificial Intelligence and Machine Learning. Coursework includes deep learning, algorithms, and distributed systems.</p>
+            </div>
+
+            <!-- CompTIA A+ certification -->
+            <div class="degree-card">
+                <span class="degree-badge">Certification</span>
+                <h3>CompTIA A+</h3>
+                <div class="school">CompTIA</div>
+                <div class="year">2025</div>
+                <p>Industry-recognized certification covering core cybersecurity skills, network defense, and threat management.</p>
+            </div>
+
+            <!-- AWS Cloud Practitioner certification -->
+            <div class="degree-card">
+                <span class="degree-badge">Certification</span>
+                <h3>AWS Cloud Practitioner</h3>
+                <div class="school">Amazon Web Services</div>
+                <div class="year">2024</div>
+                <p>Foundational understanding of AWS cloud services, architecture, security, and pricing models.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================
+     SKILLS PAGE
+     Flat list of .skill pill elements. Add or remove
+     <div class="skill"> entries to update your skill set.
+     ========================================================= -->
+<div class="page" id="page-skills">
+    <div class="inner">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills">
+            <div class="skill">Python</div>
+            <div class="skill">Artificial Intelligence</div>
+            <div class="skill">Machine Learning</div>
+            <div class="skill">Cybersecurity</div>
+            <div class="skill">React</div>
+            <div class="skill">Linux</div>
+            <div class="skill">Networking</div>
+            <div class="skill">Cloud</div>
+            <div class="skill">Bash / Shell</div>
+            <div class="skill">Git</div>
+            <div class="skill">Docker</div>
+            <div class="skill">Penetration Testing</div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================
+     PROJECTS PAGE
+     Grid of .project cards. Each card has:
+     - h3 project title
+     - p short description
+     - .tags row of technology pill labels
+     ========================================================= -->
+<div class="page" id="page-projects">
+    <div class="inner">
+        <h2 class="section-title">Projects</h2>
+        <div class="grid">
+
+            <!-- Project 1: AI Assistant System -->
+            <div class="project">
+                <h3>AI Assistant System</h3>
+                <p>Intelligent automation and AI-based interaction system with natural language processing capabilities.</p>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">NLP</span>
+                    <span class="tag">AI</span>
+                </div>
+            </div>
+
+            <!-- Project 2: Home Lab Infrastructure -->
+            <div class="project">
+                <h3>Home Lab Infrastructure</h3>
+                <p>Self-hosted servers and networking environment for testing and development.</p>
+                <div class="tags">
+                    <span class="tag">Linux</span>
+                    <span class="tag">Networking</span>
+                    <span class="tag">Docker</span>
+                </div>
+            </div>
+
+            <!-- Project 3: Cybersecurity Labs -->
+            <div class="project">
+                <h3>Cybersecurity Labs</h3>
+                <p>Ethical hacking, penetration testing, and defense systems research environment.</p>
+                <div class="tags">
+                    <span class="tag">Pen Testing</span>
+                    <span class="tag">Security</span>
+                    <span class="tag">Kali Linux</span>
+                </div>
+            </div>
+
+            <!-- Project 4: Web Development -->
+            <div class="project">
+                <h3>Web Development</h3>
+                <p>Modern responsive applications and UI systems built with cutting-edge frameworks.</p>
+                <div class="tags">
+                    <span class="tag">React</span>
+                    <span class="tag">HTML/CSS</span>
+                    <span class="tag">JS</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================
+     CONTACT PAGE
+     Three anchor (.contact-link) rows linking to GitHub,
+     email, and LinkedIn. Each row contains an emoji icon
+     and a two-line text block (platform name + handle/URL).
+     target="_blank" opens external links in a new tab.
+     ========================================================= -->
+<div class="page" id="page-contact">
+    <div class="inner">
+        <h2 class="section-title">Contact</h2>
+
+        <!-- GitHub link -->
+        <a class="contact-link" href="https://github.com/dhruv7890" target="_blank">
+            <span class="contact-icon">🐙</span>
+            <div>
+                <div style="font-weight:600;color:#e2e8f0;">GitHub</div>
+                <div style="font-size:0.85rem;color:#64748b;">github.com/dhruv7890</div>
+            </div>
+        </a>
+
+        <!-- Email link — uses mailto: protocol to open the default mail client -->
+        <a class="contact-link" href="mailto:your@email.com">
+            <span class="contact-icon">✉️</span>
+            <div>
+                <div style="font-weight:600;color:#e2e8f0;">Email</div>
+                <div style="font-size:0.85rem;color:#64748b;">your@email.com</div>
+            </div>
+        </a>
+
+        <!-- LinkedIn link -->
+        <a class="contact-link" href="https://linkedin.com" target="_blank">
+            <span class="contact-icon">💼</span>
+            <div>
+                <div style="font-weight:600;color:#e2e8f0;">LinkedIn</div>
+                <div style="font-size:0.85rem;color:#64748b;">linkedin.com/in/yourprofile</div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- Simple copyright footer -->
+<footer>© 2026 Dhruv Pandya. All Rights Reserved.</footer>
+
+<script>
+/* =============================================================
+   PAGE ROUTER — showPage(name)
+   Called by each nav button's onclick handler.
+
+   Steps:
+   1. Remove .active from every .page element (hides them all).
+   2. Add .active to the target page identified by "page-{name}"
+      (makes it visible and triggers the fadeIn animation).
+   3. Sync the nav: remove .active from all buttons, then add
+      .active to the button whose data-page matches `name`.
+   4. Scroll the window back to the top smoothly.
+   ============================================================= */
+function showPage(name){
+    // Hide all pages by stripping the .active class
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
+    // Show the target page — its CSS transitions handle the fade-in
+    const target = document.getElementById('page-' + name);
+    if(target) target.classList.add('active');
+
+    // Update nav highlight so the correct button appears active
+    document.querySelectorAll('nav button').forEach(b => {
+        b.classList.toggle('active', b.dataset.page === name);
+    });
+
+    // Scroll to the top so the user sees the page header
+    window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+/* =============================================================
+   PARTICLE SYSTEM
+   Draws animated floating dots and connecting lines on the
+   background <canvas> element using the Canvas 2D API.
+   ============================================================= */
+
+// Get a reference to the canvas and its 2D drawing context
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+// Match the canvas resolution to the viewport dimensions
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Array that holds all active Particle objects
+let particlesArray = [];
+
+// Total number of particles to create on init
+const numberOfParticles = 90;
+
+// Tracks the mouse position and the radius of its repulsion field
+let mouse = { x:null, y:null, radius:120 };
+
+// Update mouse coordinates on every mouse move
+window.addEventListener("mousemove", e=>{ mouse.x=e.x; mouse.y=e.y; });
+
+// On resize: scale the canvas to the new viewport size and
+// re-initialise the particle array so they fill the new area
+window.addEventListener("resize", ()=>{
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+    init();
+});
+
+/* -------------------------------------------------------------
+   Particle Class
+   Each particle is a small glowing cyan dot with a random
+   starting position, random velocity (dx/dy), and random size.
+   ------------------------------------------------------------- */
+class Particle{
+    /* @param x, y   — starting coordinates
+       @param dx, dy — velocity in pixels per frame
+       @param size   — dot radius in pixels */
+    constructor(x,y,dx,dy,size){
+        this.x=x; this.y=y;
+        this.dx=dx; this.dy=dy;
+        this.size=size;
+    }
+
+    /* draw() — renders the particle as a glowing circle */
+    draw(){
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); // full circle
+        ctx.fillStyle="rgba(0,229,255,0.8)";               // cyan fill
+        ctx.shadowBlur=10; ctx.shadowColor="#00e5ff";      // outer glow
+        ctx.fill();
+    }
+
+    /* update() — advances the particle by one frame:
+       1. Bounce off canvas edges by reversing velocity.
+       2. Repel from the mouse if within mouse.radius.
+       3. Move by dx/dy.
+       4. Redraw at the new position. */
+    update(){
+        // Bounce horizontally at left/right edges
+        if(this.x > canvas.width  || this.x < 0) this.dx = -this.dx;
+        // Bounce vertically at top/bottom edges
+        if(this.y > canvas.height || this.y < 0) this.dy = -this.dy;
+
+        // Mouse repulsion — gently push the particle away
+        let dx = mouse.x - this.x;
+        let dy = mouse.y - this.y;
+        let dist = Math.sqrt(dx*dx + dy*dy); // Euclidean distance to mouse
+        if(dist < mouse.radius){
+            // Move 1/20th of the way away from the mouse each frame
+            this.x -= dx/20;
+            this.y -= dy/20;
+        }
+
+        // Advance position
+        this.x += this.dx;
+        this.y += this.dy;
+
+        // Redraw at the updated position
+        this.draw();
+    }
+}
+
+/* -------------------------------------------------------------
+   init() — creates a fresh set of particles spread randomly
+   across the canvas. Called on page load and on window resize.
+   ------------------------------------------------------------- */
+function init(){
+    particlesArray = [];
+    for(let i = 0; i < numberOfParticles; i++){
+        particlesArray.push(new Particle(
+            Math.random() * canvas.width,   // random x within viewport
+            Math.random() * canvas.height,  // random y within viewport
+            (Math.random() - 0.5) * 0.6,   // random horizontal velocity ±0.3
+            (Math.random() - 0.5) * 0.6,   // random vertical velocity ±0.3
+            Math.random() * 2 + 1           // random radius between 1–3 px
+        ));
+    }
+}
+
+/* -------------------------------------------------------------
+   connect() — draws thin cyan lines between any two particles
+   whose straight-line distance is less than 120px.
+   Called every frame to create the dynamic web / network look.
+   ------------------------------------------------------------- */
+function connect(){
+    for(let a = 0; a < particlesArray.length; a++){
+        // Start inner loop at a+1 to avoid drawing the same
+        // line twice (A→B is the same as B→A)
+        for(let b = a; b < particlesArray.length; b++){
+            let dx = particlesArray[a].x - particlesArray[b].x;
+            let dy = particlesArray[a].y - particlesArray[b].y;
+            // Only draw a line if the particles are close enough
+            if(Math.sqrt(dx*dx + dy*dy) < 120){
+                ctx.beginPath();
+                ctx.strokeStyle = "rgba(0,229,255,0.15)"; // faint cyan line
+                ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                ctx.stroke();
+            }
+        }
+    }
+}
+
+/* -------------------------------------------------------------
+   animate() — the main render loop.
+   Uses requestAnimationFrame to sync with the display refresh
+   rate (~60 fps). Each frame:
+   1. Clear the entire canvas.
+   2. Update and redraw every particle.
+   3. Draw connection lines between nearby particles.
+   Then schedule itself to run again next frame.
+   ------------------------------------------------------------- */
+function animate(){
+    requestAnimationFrame(animate);                     // schedule next frame
+    ctx.clearRect(0, 0, canvas.width, canvas.height);  // clear previous frame
+    particlesArray.forEach(p => p.update());            // move + draw each dot
+    connect();                                          // draw connecting lines
+}
+
+// Kick off the particle system
+init();
+animate();
+</script>
+</body>
+</html>
 body{
     font-family:'Segoe UI', Arial, sans-serif;
     background: radial-gradient(circle at top, #020617, #000);
