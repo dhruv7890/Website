@@ -6,949 +6,57 @@
 <title>Dhruv Pandya | Portfolio</title>
 <style>
 *{ margin:0; padding:0; box-sizing:border-box; }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dhruv Pandya | Portfolio</title>
-<style>
 
-/* =========================================================
-   GLOBAL RESET
-   Removes all default browser margin/padding and sets
-   box-sizing to border-box so padding/borders don't add
-   extra width to elements.
-   ========================================================= */
-*{ margin:0; padding:0; box-sizing:border-box; }
-
-/* =========================================================
-   BODY — BASE STYLES
-   Sets the primary font, a deep dark radial gradient
-   background (near-black at the top, pure black at the
-   bottom), white text, and hides horizontal overflow so
-   animated elements don't create a scrollbar.
-   ========================================================= */
 body{
     font-family:'Segoe UI', Arial, sans-serif;
     background: radial-gradient(circle at top, #020617, #000);
     color:white;
     overflow-x:hidden;
     min-height:100vh;
+    cursor:none; /* hide default cursor — replaced by custom cursor */
 }
 
-/* =========================================================
-   PARTICLE CANVAS
-   Fixed behind all content (z-index: -3). The canvas is
-   drawn on by the JS particle system to produce the
-   floating cyan dots and connecting lines.
-   ========================================================= */
-#particles{
-    position:fixed; top:0; left:0;
-    width:100%; height:100%; z-index:-3;
-}
-
-/* =========================================================
-   AMBIENT GLOW OVERLAY
-   A pseudo-element attached to the body. It creates two
-   soft radial gradients — a cyan glow in the top-left and
-   a purple glow in the bottom-right — that slowly drift
-   using the floatGlow animation for a living background.
-   Sits at z-index: -2 so it's above the canvas but behind
-   all page content.
-   ========================================================= */
-body::before{
-    content:"";
-    position:fixed; top:-50%; left:-50%;
-    width:200%; height:200%;
-    background:
-        radial-gradient(circle, rgba(0,229,255,0.12), transparent 40%),
-        radial-gradient(circle at bottom right, rgba(124,58,237,0.12), transparent 40%);
-    animation: floatGlow 14s linear infinite;
-    z-index:-2;
-}
-
-/* =========================================================
-   FLOAT GLOW ANIMATION
-   Slowly translates the ambient overlay a few percent in
-   both axes and back, giving the impression the light
-   source is breathing/drifting.
-   ========================================================= */
-@keyframes floatGlow{
-    0%{transform:translate(0,0);}
-    50%{transform:translate(3%,5%);}
-    100%{transform:translate(0,0);}
-}
-
-/* ==========================================================
-   NAVIGATION BAR
-   Fixed to the top of the viewport at z-index 100 so it
-   always sits above page content. Uses flexbox to centre
-   the nav buttons horizontally with a small gap between
-   them. The semi-transparent dark background + backdrop
-   blur creates a frosted-glass effect. The bottom border
-   gives a subtle cyan accent line.
-   ========================================================= */
-nav{
-    position:fixed; top:0; left:0; width:100%; z-index:100;
-    display:flex; justify-content:center; align-items:center;
-    padding:14px 24px; gap:6px;
-    background:rgba(2,6,23,0.65);    /* dark navy at 65% opacity */
-    backdrop-filter:blur(18px);      /* frosted-glass blur */
-    border-bottom:1px solid rgba(0,229,255,0.15);
-    flex-wrap:wrap;                  /* wrap on very narrow screens */
-}
-
-/* =========================================================
-   NAV BUTTONS
-   Styled as ghost buttons (transparent background, no
-   border by default) with uppercase small-caps text.
-   Uses a transparent border placeholder so the button
-   doesn't shift size when the border appears on hover.
-   ========================================================= */
-nav button{
-    color:#94a3b8;
-    background:none;
-    border:1px solid transparent;
-    font-size:0.88rem;
-    font-weight:500;
-    letter-spacing:0.06em;
-    text-transform:uppercase;
-    padding:7px 16px;
-    border-radius:8px;
-    cursor:pointer;
-    transition:0.25s;
-    font-family:inherit;
-}
-
-/* =========================================================
-   NAV BUTTON — HOVER & ACTIVE STATE
-   Lights the button up with cyan text, a subtle cyan
-   border, a very light cyan background tint, and a text
-   glow. The .active class is added by JS to the button
-   matching the current page.
-   ========================================================= */
-nav button:hover,
-nav button.active{
-    color:#00e5ff;
-    border-color:rgba(0,229,255,0.35);
-    background:rgba(0,229,255,0.07);
-    text-shadow:0 0 12px rgba(0,229,255,0.6);
-}
-
-/* =========================================================
-   PAGE CONTAINERS
-   Each section of the site is a .page div. By default all
-   are hidden (display:none). The JS router adds .active to
-   whichever section should be visible, which overrides
-   display:none and triggers the fadeIn animation.
-   padding-top:72px offsets the fixed navbar height so
-   content doesn't hide beneath it.
-   ========================================================= */
-.page{
-    display:none;
-    min-height:100vh;
-    padding-top:72px;
-    animation: fadeIn 0.4s ease; /* smooth entrance when shown */
-}
-.page.active{ display:block; }
-
-/* =========================================================
-   FADE-IN ANIMATION
-   Runs when a page becomes active. Slides content up 16px
-   while fading from transparent to opaque for a polished
-   page-transition feel.
-   ========================================================= */
-@keyframes fadeIn{
-    from{ opacity:0; transform:translateY(16px); }
-    to{ opacity:1; transform:translateY(0); }
-}
-
-/* =========================================================
-   HOME PAGE — LAYOUT OVERRIDE
-   The home page uses a centred flexbox column layout
-   instead of the standard block display. We override
-   display:none with display:flex when .active is added.
-   Extra top padding gives generous breathing room under
-   the navbar.
-   ========================================================= */
-#page-home{
-    display:none;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:100px 20px 40px;
-}
-#page-home.active{ display:flex; }
-
-/* =========================================================
-   HOME PAGE — HERO HEADLINE
-   Large gradient text using the CSS background-clip trick:
-   a gradient is applied as the background, then clipped to
-   the text shape. The gradient goes cyan → blue → purple.
-   ========================================================= */
-#page-home h1{
-    font-size:4rem;
-    background: linear-gradient(90deg,#00e5ff,#3b82f6,#a855f7);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
-
-/* Home page sub-heading (role/title line) */
-#page-home h2{ color:#38bdf8; margin:10px 0 20px; }
-
-/* Home page description paragraph — slightly muted colour,
-   constrained width, and relaxed line-height for readability */
-#page-home p{ max-width:700px; color:#cbd5e1; line-height:1.7; }
-
-/* =========================================================
-   CTA / PRIMARY BUTTON (.btn)
-   Shared class used for the "Explore My Work" button.
-   Blue-to-purple gradient fill with a glowing cyan box
-   shadow. Scales up slightly on hover and brightens the
-   glow for a tactile feel.
-   ========================================================= */
-.btn{
-    display:inline-block;
-    margin-top:25px;
-    padding:12px 28px;
-    border-radius:12px;
-    text-decoration:none;
-    color:white;
-    background:linear-gradient(90deg,#2563eb,#7c3aed);
-    box-shadow:0 0 25px rgba(0,200,255,0.4);
-    transition:0.3s;
-    cursor:pointer;
-    border:none;
-    font-family:inherit;
-    font-size:1rem;
-}
-.btn:hover{ transform:scale(1.05); box-shadow:0 0 40px rgba(0,229,255,0.6); }
-
-/* =========================================================
-   INNER CONTENT WRAPPER
-   Centres page content, caps maximum width at 1100px, and
-   adds comfortable vertical padding above and below.
-   Used on every inner page (About, Degrees, Skills, etc.).
-   ========================================================= */
-.inner{
-    max-width:1100px;
-    margin:auto;
-    padding:60px 20px 80px;
-}
-
-/* =========================================================
-   SECTION TITLES
-   Large, centred, sky-blue headings that introduce each
-   page section.
-   ========================================================= */
-.section-title{
-    font-size:2.5rem;
-    margin-bottom:40px;
-    color:#38bdf8;
-    text-align:center;
-}
-
-/* =========================================================
-   CARD & PROJECT — BASE STYLES
-   Shared "glass card" appearance:
-   - Very dark semi-transparent background
-   - backdrop-filter blur for the frosted-glass look
-   - Rounded corners and a subtle cyan border
-   - overflow:hidden so the pseudo-element glow effects
-     stay clipped inside the card boundary
-   - Smooth lift on hover via translateY transition
-   ========================================================= */
-.card, .project{
-    position:relative;
-    background:rgba(10,15,30,0.6);
-    backdrop-filter:blur(14px);
-    border-radius:16px;
-    padding:25px;
-    border:1px solid rgba(0,229,255,0.25);
-    overflow:hidden;
-    transition:0.3s;
-    line-height:1.7;
-    color:#cbd5e1;
-}
-
-/* =========================================================
-   ANIMATED RAINBOW BORDER (::before pseudo-element)
-   Creates an animated gradient that travels around the
-   card border. Technique:
-   1. The ::before element fills the entire card (inset:0).
-   2. 1px padding creates the visible border region.
-   3. A -webkit-mask with xor composite cuts out the centre
-      so only the 1px border ring shows the gradient.
-   4. background-size:300% allows backgroundPosition
-      animation to shift the gradient across the element.
-   ========================================================= */
-.card::before, .project::before{
-    content:"";
-    position:absolute; inset:0;
-    border-radius:16px;
-    padding:1px;
-    background:linear-gradient(90deg,transparent,#00e5ff,#7c3aed,transparent);
-    background-size:300% 300%;
-    animation:borderMove 5s linear infinite;
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor; /* show only the padding ring */
-    pointer-events:none;        /* don't block mouse interactions */
-}
-
-/* Moves the gradient along the border continuously */
-@keyframes borderMove{
-    0%{background-position:0% 50%;}
-    100%{background-position:100% 50%;}
-}
-
-/* =========================================================
-   SCAN LINE EFFECT (::after pseudo-element)
-   A translucent light band that travels top-to-bottom
-   across the card, evoking a retro CRT/hologram scanner.
-   The element is 200% tall so the band enters and exits
-   cleanly without a visible jump.
-   ========================================================= */
-.card::after, .project::after{
-    content:"";
-    position:absolute; top:-100%; left:0;
-    width:100%; height:200%;
-    background:linear-gradient(to bottom, transparent, rgba(0,229,255,0.08), transparent);
-    animation:scan 4s linear infinite;
+/* ===== CUSTOM CURSOR ===== */
+#cursor{
+    position:fixed;
+    width:12px; height:12px;
+    border-radius:50%;
+    background:#00e5ff;
+    box-shadow:0 0 14px 4px rgba(0,229,255,0.7);
     pointer-events:none;
+    z-index:9999;
+    transform:translate(-50%,-50%);
+    transition:transform 0.08s ease, background 0.2s;
 }
-
-/* Translates the scan band from above the card to below it */
-@keyframes scan{
-    0%{transform:translateY(-50%);}
-    100%{transform:translateY(50%);}
-}
-
-/* Lifts the card on hover for a clickable, depth feel */
-.card:hover, .project:hover{ transform:translateY(-6px); }
-
-/* =========================================================
-   RESPONSIVE GRID
-   Auto-fills columns with a minimum width of 280px.
-   Items wrap to the next row when the viewport is too
-   narrow to fit another column. Used for projects and
-   degree cards.
-   ========================================================= */
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:20px;
-}
-
-/* =========================================================
-   SKILLS PILL LIST
-   Flexbox row that wraps onto multiple lines. Each pill
-   (.skill) has a subtle cyan-tinted background and border
-   to match the site's colour palette.
-   ========================================================= */
-.skills{
-    display:flex; flex-wrap:wrap;
-    gap:10px; justify-content:center;
-}
-
-.skill{
-    padding:10px 15px;
-    border-radius:20px;
-    background:rgba(0,229,255,0.08);   /* very light cyan tint */
-    border:1px solid rgba(0,229,255,0.25);
-    color:#e2e8f0;
-}
-
-/* =========================================================
-   DEGREE / EDUCATION CARDS
-   Variant card style with a purple accent colour instead
-   of cyan, to visually distinguish education from
-   projects. Hover intensifies the border and adds a
-   purple glow shadow.
-   ========================================================= */
-.degree-card{
-    position:relative;
-    background:rgba(10,15,30,0.6);
-    backdrop-filter:blur(14px);
-    border-radius:16px;
-    padding:28px 30px;
-    border:1px solid rgba(124,58,237,0.3);
-    overflow:hidden;
-    transition:0.3s;
-    display:flex; flex-direction:column; gap:8px;
-}
-
-.degree-card:hover{
-    transform:translateY(-6px);
-    border-color:rgba(124,58,237,0.6);
-    box-shadow:0 0 30px rgba(124,58,237,0.2);
-}
-
-/* Purple-tinted scan line for degree cards (reuses ::after pattern) */
-.degree-card::after{
-    content:"";
-    position:absolute; top:-100%; left:0;
-    width:100%; height:200%;
-    background:linear-gradient(to bottom, transparent, rgba(124,58,237,0.06), transparent);
-    animation:scan 5s linear infinite;
+#cursor-ring{
+    position:fixed;
+    width:36px; height:36px;
+    border-radius:50%;
+    border:1.5px solid rgba(0,229,255,0.4);
     pointer-events:none;
+    z-index:9998;
+    transform:translate(-50%,-50%);
+    transition:width 0.2s, height 0.2s, border-color 0.2s;
+}
+body:has(a:hover) #cursor-ring,
+body:has(button:hover) #cursor-ring{
+    width:52px; height:52px;
+    border-color:rgba(0,229,255,0.8);
 }
 
-/* =========================================================
-   DEGREE BADGE
-   Small status pill displayed at the top of each degree
-   card (e.g. "In Progress", "Certification"). Uses a
-   purple theme to match the card accent colour.
-   ========================================================= */
-.degree-badge{
-    display:inline-block;
-    font-size:0.75rem; font-weight:600;
-    letter-spacing:0.08em; text-transform:uppercase;
-    padding:4px 12px; border-radius:20px;
-    background:rgba(124,58,237,0.18);
-    border:1px solid rgba(124,58,237,0.4);
-    color:#a78bfa; width:fit-content; margin-bottom:4px;
+/* ===== SCROLL PROGRESS BAR ===== */
+#progress-bar{
+    position:fixed;
+    top:0; left:0;
+    height:3px;
+    width:0%;
+    background:linear-gradient(90deg,#00e5ff,#7c3aed);
+    z-index:200;
+    transition:width 0.1s linear;
+    box-shadow:0 0 10px rgba(0,229,255,0.6);
 }
 
-/* Degree card typography hierarchy */
-.degree-card h3{ font-size:1.15rem; color:#e2e8f0; }  /* Degree/cert name */
-.degree-card .school{ color:#38bdf8; font-size:0.95rem; }  /* Institution name */
-.degree-card .year{ color:#64748b; font-size:0.85rem; }    /* Year / date range */
-.degree-card p{ color:#94a3b8; font-size:0.9rem; line-height:1.5; margin-top:4px; } /* Description */
-
-/* =========================================================
-   ABOUT PAGE — TWO-COLUMN STATS GRID
-   Switches to single column on screens narrower than 640px
-   using a media query.
-   ========================================================= */
-.about-grid{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap:20px;
-}
-@media(max-width:640px){ .about-grid{ grid-template-columns:1fr; } }
-
-/* =========================================================
-   ABOUT STAT TILES
-   Each tile shows a large gradient number (.num) above a
-   muted label (.label). The background and border follow
-   the same glass-card pattern as the rest of the site.
-   ========================================================= */
-.about-stat{
-    background:rgba(10,15,30,0.6);
-    backdrop-filter:blur(14px);
-    border-radius:16px;
-    padding:24px;
-    border:1px solid rgba(0,229,255,0.2);
-    text-align:center;
-}
-.about-stat .num{
-    font-size:2.2rem; font-weight:700;
-    background:linear-gradient(90deg,#00e5ff,#a855f7); /* cyan → purple gradient */
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-}
-.about-stat .label{ color:#94a3b8; font-size:0.9rem; margin-top:4px; }
-
-/* =========================================================
-   CONTACT LINK ROWS
-   Each contact method (GitHub, Email, LinkedIn) is a
-   full-width anchor styled as a card row. The icon and
-   text sit side by side with flexbox. On hover, the whole
-   row slides right 6px and highlights cyan.
-   ========================================================= */
-.contact-link{
-    display:flex; align-items:center; gap:12px;
-    background:rgba(10,15,30,0.6);
-    backdrop-filter:blur(14px);
-    border-radius:16px; padding:20px 24px;
-    border:1px solid rgba(0,229,255,0.2);
-    color:#cbd5e1; text-decoration:none;
-    transition:0.25s; margin-bottom:12px;
-}
-.contact-link:hover{
-    border-color:rgba(0,229,255,0.5);
-    color:#00e5ff;
-    transform:translateX(6px); /* slide right on hover */
-}
-.contact-icon{ font-size:1.4rem; } /* emoji icon size */
-
-/* =========================================================
-   PROJECT CARD TYPOGRAPHY
-   h3 = project title, p = short description text.
-   ========================================================= */
-.project h3{ margin-bottom:8px; color:#e2e8f0; }
-.project p{ color:#94a3b8; margin-bottom:12px; line-height:1.6; }
-
-/* =========================================================
-   TECHNOLOGY TAGS
-   Small pill labels listed under each project card,
-   indicating languages/tools used. Sky-blue tint on both
-   the background and border.
-   ========================================================= */
-.tags{ display:flex; flex-wrap:wrap; gap:6px; }
-.tag{
-    font-size:0.75rem; padding:3px 10px;
-    border-radius:20px;
-    background:rgba(56,189,248,0.1);
-    border:1px solid rgba(56,189,248,0.25);
-    color:#38bdf8;
-}
-
-/* =========================================================
-   FOOTER
-   Simple centred copyright bar at the bottom. Dark
-   background matching the body with a subtle top border
-   matching the navbar's bottom border.
-   ========================================================= */
-footer{
-    text-align:center; padding:30px;
-    background:#020617; color:#94a3b8;
-    border-top:1px solid rgba(0,229,255,0.15);
-}
-</style>
-</head>
-<body>
-
-<!-- =========================================================
-     PARTICLE CANVAS
-     The <canvas> element that the JS particle system draws
-     on. Positioned fixed behind all content via CSS.
-     ========================================================= -->
-<canvas id="particles"></canvas>
-
-<!-- =========================================================
-     NAVIGATION BAR
-     Six buttons, one per page. Each has a data-page
-     attribute that matches the corresponding page ID
-     (e.g. data-page="home" → #page-home). The JS router
-     uses this attribute to toggle the .active class.
-     The "Home" button starts with .active since the home
-     page is shown on first load.
-     ========================================================= -->
-<nav id="navbar">
-    <button onclick="showPage('home')"     class="active" data-page="home">Home</button>
-    <button onclick="showPage('about')"    data-page="about">About</button>
-    <button onclick="showPage('degrees')"  data-page="degrees">Degrees</button>
-    <button onclick="showPage('skills')"   data-page="skills">Skills</button>
-    <button onclick="showPage('projects')" data-page="projects">Projects</button>
-    <button onclick="showPage('contact')"  data-page="contact">Contact</button>
-</nav>
-
-<!-- =========================================================
-     HOME PAGE
-     Hero section with name, title, description, and a CTA
-     button that navigates to the Projects page.
-     ========================================================= -->
-<div class="page active" id="page-home">
-    <h1>Dhruv Pandya</h1>
-    <h2>Artificial Intelligence & Technology Student</h2>
-    <p>Passionate about Artificial Intelligence, Cybersecurity, Software Development, Cloud Systems, and futuristic computing.</p>
-    <!-- Calls showPage() to switch to the projects section -->
-    <button class="btn" onclick="showPage('projects')">Explore My Work</button>
-</div>
-
-<!-- =========================================================
-     ABOUT PAGE
-     Short bio paragraph followed by a 2×2 grid of stat
-     tiles showing years of coding, projects, certifications,
-     and an "infinite curiosity" easter egg.
-     ========================================================= -->
-<div class="page" id="page-about">
-    <div class="inner">
-        <h2 class="section-title">About Me</h2>
-
-        <!-- Bio card — uses the shared .card glass style -->
-        <div class="card" style="margin-bottom:24px;">
-            Computer Science & IT student focused on Artificial Intelligence, automation, and next-generation systems. I enjoy building tools that sit at the intersection of security and intelligent computing — from home lab infrastructure to AI-driven applications.
-        </div>
-
-        <!-- 2×2 stat grid -->
-        <div class="about-grid">
-            <div class="about-stat">
-                <div class="num">3+</div>
-                <div class="label">Years Coding</div>
-            </div>
-            <div class="about-stat">
-                <div class="num">4</div>
-                <div class="label">Major Projects</div>
-            </div>
-            <div class="about-stat">
-                <div class="num">2</div>
-                <div class="label">Certifications</div>
-            </div>
-            <div class="about-stat">
-                <!-- ∞ symbol rendered as-is; CSS gradient clips it -->
-                <div class="num">∞</div>
-                <div class="label">Curiosity</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- =========================================================
-     DEGREES PAGE
-     Auto-fill grid of degree/certification cards.
-     Each card has:
-     - A coloured badge (status pill)
-     - Degree/cert name (h3)
-     - Institution name (.school)
-     - Year (.year)
-     - Short description (p)
-     ========================================================= -->
-<div class="page" id="page-degrees">
-    <div class="inner">
-        <h2 class="section-title">Degrees & Education</h2>
-        <div class="grid">
-
-            <!-- B.S. Computer Science — currently in progress -->
-            <div class="degree-card">
-                <span class="degree-badge">In Progress</span>
-                <h3>B.S. Computer Science</h3>
-                <div class="school">Your University Name</div>
-                <div class="year">Expected 2027</div>
-                <p>Specialization in Artificial Intelligence and Machine Learning. Coursework includes deep learning, algorithms, and distributed systems.</p>
-            </div>
-
-            <!-- CompTIA A+ certification -->
-            <div class="degree-card">
-                <span class="degree-badge">Certification</span>
-                <h3>CompTIA A+</h3>
-                <div class="school">CompTIA</div>
-                <div class="year">2025</div>
-                <p>Industry-recognized certification covering core cybersecurity skills, network defense, and threat management.</p>
-            </div>
-
-            <!-- AWS Cloud Practitioner certification -->
-            <div class="degree-card">
-                <span class="degree-badge">Certification</span>
-                <h3>AWS Cloud Practitioner</h3>
-                <div class="school">Amazon Web Services</div>
-                <div class="year">2024</div>
-                <p>Foundational understanding of AWS cloud services, architecture, security, and pricing models.</p>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<!-- =========================================================
-     SKILLS PAGE
-     Flat list of .skill pill elements. Add or remove
-     <div class="skill"> entries to update your skill set.
-     ========================================================= -->
-<div class="page" id="page-skills">
-    <div class="inner">
-        <h2 class="section-title">Skills</h2>
-        <div class="skills">
-            <div class="skill">Python</div>
-            <div class="skill">Artificial Intelligence</div>
-            <div class="skill">Machine Learning</div>
-            <div class="skill">Cybersecurity</div>
-            <div class="skill">React</div>
-            <div class="skill">Linux</div>
-            <div class="skill">Networking</div>
-            <div class="skill">Cloud</div>
-            <div class="skill">Bash / Shell</div>
-            <div class="skill">Git</div>
-            <div class="skill">Docker</div>
-            <div class="skill">Penetration Testing</div>
-        </div>
-    </div>
-</div>
-
-<!-- =========================================================
-     PROJECTS PAGE
-     Grid of .project cards. Each card has:
-     - h3 project title
-     - p short description
-     - .tags row of technology pill labels
-     ========================================================= -->
-<div class="page" id="page-projects">
-    <div class="inner">
-        <h2 class="section-title">Projects</h2>
-        <div class="grid">
-
-            <!-- Project 1: AI Assistant System -->
-            <div class="project">
-                <h3>AI Assistant System</h3>
-                <p>Intelligent automation and AI-based interaction system with natural language processing capabilities.</p>
-                <div class="tags">
-                    <span class="tag">Python</span>
-                    <span class="tag">NLP</span>
-                    <span class="tag">AI</span>
-                </div>
-            </div>
-
-            <!-- Project 2: Home Lab Infrastructure -->
-            <div class="project">
-                <h3>Home Lab Infrastructure</h3>
-                <p>Self-hosted servers and networking environment for testing and development.</p>
-                <div class="tags">
-                    <span class="tag">Linux</span>
-                    <span class="tag">Networking</span>
-                    <span class="tag">Docker</span>
-                </div>
-            </div>
-
-            <!-- Project 3: Cybersecurity Labs -->
-            <div class="project">
-                <h3>Cybersecurity Labs</h3>
-                <p>Ethical hacking, penetration testing, and defense systems research environment.</p>
-                <div class="tags">
-                    <span class="tag">Pen Testing</span>
-                    <span class="tag">Security</span>
-                    <span class="tag">Kali Linux</span>
-                </div>
-            </div>
-
-            <!-- Project 4: Web Development -->
-            <div class="project">
-                <h3>Web Development</h3>
-                <p>Modern responsive applications and UI systems built with cutting-edge frameworks.</p>
-                <div class="tags">
-                    <span class="tag">React</span>
-                    <span class="tag">HTML/CSS</span>
-                    <span class="tag">JS</span>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<!-- =========================================================
-     CONTACT PAGE
-     Three anchor (.contact-link) rows linking to GitHub,
-     email, and LinkedIn. Each row contains an emoji icon
-     and a two-line text block (platform name + handle/URL).
-     target="_blank" opens external links in a new tab.
-     ========================================================= -->
-<div class="page" id="page-contact">
-    <div class="inner">
-        <h2 class="section-title">Contact</h2>
-
-        <!-- GitHub link -->
-        <a class="contact-link" href="https://github.com/dhruv7890" target="_blank">
-            <span class="contact-icon">🐙</span>
-            <div>
-                <div style="font-weight:600;color:#e2e8f0;">GitHub</div>
-                <div style="font-size:0.85rem;color:#64748b;">github.com/dhruv7890</div>
-            </div>
-        </a>
-
-        <!-- Email link — uses mailto: protocol to open the default mail client -->
-        <a class="contact-link" href="mailto:your@email.com">
-            <span class="contact-icon">✉️</span>
-            <div>
-                <div style="font-weight:600;color:#e2e8f0;">Email</div>
-                <div style="font-size:0.85rem;color:#64748b;">your@email.com</div>
-            </div>
-        </a>
-
-        <!-- LinkedIn link -->
-        <a class="contact-link" href="https://linkedin.com" target="_blank">
-            <span class="contact-icon">💼</span>
-            <div>
-                <div style="font-weight:600;color:#e2e8f0;">LinkedIn</div>
-                <div style="font-size:0.85rem;color:#64748b;">linkedin.com/in/yourprofile</div>
-            </div>
-        </a>
-    </div>
-</div>
-
-<!-- Simple copyright footer -->
-<footer>© 2026 Dhruv Pandya. All Rights Reserved.</footer>
-
-<script>
-/* =============================================================
-   PAGE ROUTER — showPage(name)
-   Called by each nav button's onclick handler.
-
-   Steps:
-   1. Remove .active from every .page element (hides them all).
-   2. Add .active to the target page identified by "page-{name}"
-      (makes it visible and triggers the fadeIn animation).
-   3. Sync the nav: remove .active from all buttons, then add
-      .active to the button whose data-page matches `name`.
-   4. Scroll the window back to the top smoothly.
-   ============================================================= */
-function showPage(name){
-    // Hide all pages by stripping the .active class
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-
-    // Show the target page — its CSS transitions handle the fade-in
-    const target = document.getElementById('page-' + name);
-    if(target) target.classList.add('active');
-
-    // Update nav highlight so the correct button appears active
-    document.querySelectorAll('nav button').forEach(b => {
-        b.classList.toggle('active', b.dataset.page === name);
-    });
-
-    // Scroll to the top so the user sees the page header
-    window.scrollTo({ top:0, behavior:'smooth' });
-}
-
-/* =============================================================
-   PARTICLE SYSTEM
-   Draws animated floating dots and connecting lines on the
-   background <canvas> element using the Canvas 2D API.
-   ============================================================= */
-
-// Get a reference to the canvas and its 2D drawing context
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-
-// Match the canvas resolution to the viewport dimensions
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-// Array that holds all active Particle objects
-let particlesArray = [];
-
-// Total number of particles to create on init
-const numberOfParticles = 90;
-
-// Tracks the mouse position and the radius of its repulsion field
-let mouse = { x:null, y:null, radius:120 };
-
-// Update mouse coordinates on every mouse move
-window.addEventListener("mousemove", e=>{ mouse.x=e.x; mouse.y=e.y; });
-
-// On resize: scale the canvas to the new viewport size and
-// re-initialise the particle array so they fill the new area
-window.addEventListener("resize", ()=>{
-    canvas.width=window.innerWidth;
-    canvas.height=window.innerHeight;
-    init();
-});
-
-/* -------------------------------------------------------------
-   Particle Class
-   Each particle is a small glowing cyan dot with a random
-   starting position, random velocity (dx/dy), and random size.
-   ------------------------------------------------------------- */
-class Particle{
-    /* @param x, y   — starting coordinates
-       @param dx, dy — velocity in pixels per frame
-       @param size   — dot radius in pixels */
-    constructor(x,y,dx,dy,size){
-        this.x=x; this.y=y;
-        this.dx=dx; this.dy=dy;
-        this.size=size;
-    }
-
-    /* draw() — renders the particle as a glowing circle */
-    draw(){
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); // full circle
-        ctx.fillStyle="rgba(0,229,255,0.8)";               // cyan fill
-        ctx.shadowBlur=10; ctx.shadowColor="#00e5ff";      // outer glow
-        ctx.fill();
-    }
-
-    /* update() — advances the particle by one frame:
-       1. Bounce off canvas edges by reversing velocity.
-       2. Repel from the mouse if within mouse.radius.
-       3. Move by dx/dy.
-       4. Redraw at the new position. */
-    update(){
-        // Bounce horizontally at left/right edges
-        if(this.x > canvas.width  || this.x < 0) this.dx = -this.dx;
-        // Bounce vertically at top/bottom edges
-        if(this.y > canvas.height || this.y < 0) this.dy = -this.dy;
-
-        // Mouse repulsion — gently push the particle away
-        let dx = mouse.x - this.x;
-        let dy = mouse.y - this.y;
-        let dist = Math.sqrt(dx*dx + dy*dy); // Euclidean distance to mouse
-        if(dist < mouse.radius){
-            // Move 1/20th of the way away from the mouse each frame
-            this.x -= dx/20;
-            this.y -= dy/20;
-        }
-
-        // Advance position
-        this.x += this.dx;
-        this.y += this.dy;
-
-        // Redraw at the updated position
-        this.draw();
-    }
-}
-
-/* -------------------------------------------------------------
-   init() — creates a fresh set of particles spread randomly
-   across the canvas. Called on page load and on window resize.
-   ------------------------------------------------------------- */
-function init(){
-    particlesArray = [];
-    for(let i = 0; i < numberOfParticles; i++){
-        particlesArray.push(new Particle(
-            Math.random() * canvas.width,   // random x within viewport
-            Math.random() * canvas.height,  // random y within viewport
-            (Math.random() - 0.5) * 0.6,   // random horizontal velocity ±0.3
-            (Math.random() - 0.5) * 0.6,   // random vertical velocity ±0.3
-            Math.random() * 2 + 1           // random radius between 1–3 px
-        ));
-    }
-}
-
-/* -------------------------------------------------------------
-   connect() — draws thin cyan lines between any two particles
-   whose straight-line distance is less than 120px.
-   Called every frame to create the dynamic web / network look.
-   ------------------------------------------------------------- */
-function connect(){
-    for(let a = 0; a < particlesArray.length; a++){
-        // Start inner loop at a+1 to avoid drawing the same
-        // line twice (A→B is the same as B→A)
-        for(let b = a; b < particlesArray.length; b++){
-            let dx = particlesArray[a].x - particlesArray[b].x;
-            let dy = particlesArray[a].y - particlesArray[b].y;
-            // Only draw a line if the particles are close enough
-            if(Math.sqrt(dx*dx + dy*dy) < 120){
-                ctx.beginPath();
-                ctx.strokeStyle = "rgba(0,229,255,0.15)"; // faint cyan line
-                ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                ctx.stroke();
-            }
-        }
-    }
-}
-
-/* -------------------------------------------------------------
-   animate() — the main render loop.
-   Uses requestAnimationFrame to sync with the display refresh
-   rate (~60 fps). Each frame:
-   1. Clear the entire canvas.
-   2. Update and redraw every particle.
-   3. Draw connection lines between nearby particles.
-   Then schedule itself to run again next frame.
-   ------------------------------------------------------------- */
-function animate(){
-    requestAnimationFrame(animate);                     // schedule next frame
-    ctx.clearRect(0, 0, canvas.width, canvas.height);  // clear previous frame
-    particlesArray.forEach(p => p.update());            // move + draw each dot
-    connect();                                          // draw connecting lines
-}
-
-// Kick off the particle system
-init();
-animate();
-</script>
-</body>
-</html>
-body{
-    font-family:'Segoe UI', Arial, sans-serif;
-    background: radial-gradient(circle at top, #020617, #000);
-    color:white;
-    overflow-x:hidden;
-    min-height:100vh;
-}
-
+/* ===== PARTICLES CANVAS ===== */
 #particles{
     position:fixed; top:0; left:0;
     width:100%; height:100%; z-index:-3;
@@ -973,7 +81,7 @@ body::before{
 
 /* ===== NAV ===== */
 nav{
-    position:fixed; top:0; left:0; width:100%; z-index:100;
+    position:fixed; top:3px; left:0; width:100%; z-index:100;
     display:flex; justify-content:center; align-items:center;
     padding:14px 24px; gap:6px;
     background:rgba(2,6,23,0.65);
@@ -986,32 +94,40 @@ nav button{
     color:#94a3b8;
     background:none;
     border:1px solid transparent;
-    font-size:0.88rem;
-    font-weight:500;
+    font-size:0.88rem; font-weight:500;
     letter-spacing:0.06em;
     text-transform:uppercase;
     padding:7px 16px;
     border-radius:8px;
-    cursor:pointer;
+    cursor:none;
     transition:0.25s;
     font-family:inherit;
 }
 
-nav button:hover,
-nav button.active{
+nav button:hover, nav button.active{
     color:#00e5ff;
     border-color:rgba(0,229,255,0.35);
     background:rgba(0,229,255,0.07);
     text-shadow:0 0 12px rgba(0,229,255,0.6);
 }
 
-/* ===== PAGES ===== */
-.page{
-    display:none;
-    min-height:100vh;
-    padding-top:72px;
-    animation: fadeIn 0.4s ease;
+/* Keyboard shortcut hint badge on nav buttons */
+nav button .kbd{
+    display:inline-block;
+    font-size:0.65rem;
+    color:#475569;
+    margin-left:5px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:4px;
+    padding:1px 5px;
+    vertical-align:middle;
+    transition:0.25s;
 }
+nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(0,229,255,0.3); }
+
+/* ===== PAGES ===== */
+.page{ display:none; min-height:100vh; padding-top:72px; animation:fadeIn 0.4s ease; }
 .page.active{ display:block; }
 
 @keyframes fadeIn{
@@ -1021,103 +137,105 @@ nav button.active{
 
 /* ===== HOME PAGE ===== */
 #page-home{
-    display:none;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:100px 20px 40px;
+    display:none; flex-direction:column;
+    justify-content:center; align-items:center;
+    text-align:center; padding:100px 20px 40px;
 }
 #page-home.active{ display:flex; }
 
 #page-home h1{
     font-size:4rem;
-    background: linear-gradient(90deg,#00e5ff,#3b82f6,#a855f7);
+    background:linear-gradient(90deg,#00e5ff,#3b82f6,#a855f7,#00e5ff);
+    background-size:300% 100%;
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
+    animation:gradientShift 6s linear infinite;
 }
 
-#page-home h2{ color:#38bdf8; margin:10px 0 20px; }
+@keyframes gradientShift{
+    0%{background-position:0% 50%;}
+    100%{background-position:300% 50%;}
+}
+
+#page-home h2{ color:#38bdf8; margin:10px 0 20px; font-size:1.2rem; min-height:1.8em; }
+
+/* Typewriter cursor blink */
+#typewriter::after{
+    content:"|";
+    animation:blink 0.75s step-end infinite;
+    color:#00e5ff;
+}
+@keyframes blink{ 50%{opacity:0;} }
 
 #page-home p{ max-width:700px; color:#cbd5e1; line-height:1.7; }
 
 .btn{
-    display:inline-block;
-    margin-top:25px;
-    padding:12px 28px;
-    border-radius:12px;
-    text-decoration:none;
-    color:white;
+    display:inline-block; margin-top:25px;
+    padding:12px 28px; border-radius:12px;
+    text-decoration:none; color:white;
     background:linear-gradient(90deg,#2563eb,#7c3aed);
     box-shadow:0 0 25px rgba(0,200,255,0.4);
-    transition:0.3s;
-    cursor:pointer;
-    border:none;
-    font-family:inherit;
-    font-size:1rem;
+    transition:0.3s; cursor:none;
+    border:none; font-family:inherit; font-size:1rem;
 }
 .btn:hover{ transform:scale(1.05); box-shadow:0 0 40px rgba(0,229,255,0.6); }
 
-/* ===== INNER PAGES ===== */
-.inner{
-    max-width:1100px;
-    margin:auto;
-    padding:60px 20px 80px;
-}
+/* ===== INNER CONTENT WRAPPER ===== */
+.inner{ max-width:1100px; margin:auto; padding:60px 20px 80px; }
 
 .section-title{
-    font-size:2.5rem;
-    margin-bottom:40px;
-    color:#38bdf8;
-    text-align:center;
+    font-size:2.5rem; margin-bottom:40px;
+    color:#38bdf8; text-align:center;
 }
+
+/* ===== SCROLL REVEAL ===== */
+.reveal{
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+/* Staggered delay for grid children */
+.reveal-grid > *{ opacity:0; transform:translateY(30px); transition:opacity 0.5s ease, transform 0.5s ease; }
+.reveal-grid.visible > *:nth-child(1){ opacity:1; transform:none; transition-delay:0s; }
+.reveal-grid.visible > *:nth-child(2){ opacity:1; transform:none; transition-delay:0.1s; }
+.reveal-grid.visible > *:nth-child(3){ opacity:1; transform:none; transition-delay:0.2s; }
+.reveal-grid.visible > *:nth-child(4){ opacity:1; transform:none; transition-delay:0.3s; }
+.reveal-grid.visible > *:nth-child(5){ opacity:1; transform:none; transition-delay:0.4s; }
+.reveal-grid.visible > *:nth-child(6){ opacity:1; transform:none; transition-delay:0.5s; }
 
 /* ===== CARDS ===== */
 .card, .project{
     position:relative;
     background:rgba(10,15,30,0.6);
     backdrop-filter:blur(14px);
-    border-radius:16px;
-    padding:25px;
+    border-radius:16px; padding:25px;
     border:1px solid rgba(0,229,255,0.25);
-    overflow:hidden;
-    transition:0.3s;
-    line-height:1.7;
-    color:#cbd5e1;
+    overflow:hidden; transition:0.3s;
+    line-height:1.7; color:#cbd5e1;
 }
-
 .card::before, .project::before{
-    content:"";
-    position:absolute; inset:0;
-    border-radius:16px;
-    padding:1px;
+    content:""; position:absolute; inset:0;
+    border-radius:16px; padding:1px;
     background:linear-gradient(90deg,transparent,#00e5ff,#7c3aed,transparent);
     background-size:300% 300%;
     animation:borderMove 5s linear infinite;
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite:xor;
     pointer-events:none;
 }
-
-@keyframes borderMove{
-    0%{background-position:0% 50%;}
-    100%{background-position:100% 50%;}
-}
+@keyframes borderMove{ 0%{background-position:0% 50%;} 100%{background-position:100% 50%;} }
 
 .card::after, .project::after{
-    content:"";
-    position:absolute; top:-100%; left:0;
+    content:""; position:absolute; top:-100%; left:0;
     width:100%; height:200%;
     background:linear-gradient(to bottom, transparent, rgba(0,229,255,0.08), transparent);
-    animation:scan 4s linear infinite;
-    pointer-events:none;
+    animation:scan 4s linear infinite; pointer-events:none;
 }
-
-@keyframes scan{
-    0%{transform:translateY(-50%);}
-    100%{transform:translateY(50%);}
-}
-
+@keyframes scan{ 0%{transform:translateY(-50%);} 100%{transform:translateY(50%);} }
 .card:hover, .project:hover{ transform:translateY(-6px); }
 
 .grid{
@@ -1127,14 +245,9 @@ nav button.active{
 }
 
 /* ===== SKILLS ===== */
-.skills{
-    display:flex; flex-wrap:wrap;
-    gap:10px; justify-content:center;
-}
-
+.skills{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
 .skill{
-    padding:10px 15px;
-    border-radius:20px;
+    padding:10px 15px; border-radius:20px;
     background:rgba(0,229,255,0.08);
     border:1px solid rgba(0,229,255,0.25);
     color:#e2e8f0;
@@ -1142,62 +255,39 @@ nav button.active{
 
 /* ===== DEGREE CARDS ===== */
 .degree-card{
-    position:relative;
-    background:rgba(10,15,30,0.6);
-    backdrop-filter:blur(14px);
-    border-radius:16px;
-    padding:28px 30px;
-    border:1px solid rgba(124,58,237,0.3);
-    overflow:hidden;
-    transition:0.3s;
+    position:relative; background:rgba(10,15,30,0.6);
+    backdrop-filter:blur(14px); border-radius:16px;
+    padding:28px 30px; border:1px solid rgba(124,58,237,0.3);
+    overflow:hidden; transition:0.3s;
     display:flex; flex-direction:column; gap:8px;
 }
-
-.degree-card:hover{
-    transform:translateY(-6px);
-    border-color:rgba(124,58,237,0.6);
-    box-shadow:0 0 30px rgba(124,58,237,0.2);
-}
-
+.degree-card:hover{ transform:translateY(-6px); border-color:rgba(124,58,237,0.6); box-shadow:0 0 30px rgba(124,58,237,0.2); }
 .degree-card::after{
-    content:"";
-    position:absolute; top:-100%; left:0;
+    content:""; position:absolute; top:-100%; left:0;
     width:100%; height:200%;
-    background:linear-gradient(to bottom, transparent, rgba(124,58,237,0.06), transparent);
-    animation:scan 5s linear infinite;
-    pointer-events:none;
+    background:linear-gradient(to bottom,transparent,rgba(124,58,237,0.06),transparent);
+    animation:scan 5s linear infinite; pointer-events:none;
 }
-
 .degree-badge{
-    display:inline-block;
-    font-size:0.75rem; font-weight:600;
+    display:inline-block; font-size:0.75rem; font-weight:600;
     letter-spacing:0.08em; text-transform:uppercase;
     padding:4px 12px; border-radius:20px;
-    background:rgba(124,58,237,0.18);
-    border:1px solid rgba(124,58,237,0.4);
+    background:rgba(124,58,237,0.18); border:1px solid rgba(124,58,237,0.4);
     color:#a78bfa; width:fit-content; margin-bottom:4px;
 }
-
 .degree-card h3{ font-size:1.15rem; color:#e2e8f0; }
 .degree-card .school{ color:#38bdf8; font-size:0.95rem; }
 .degree-card .year{ color:#64748b; font-size:0.85rem; }
 .degree-card p{ color:#94a3b8; font-size:0.9rem; line-height:1.5; margin-top:4px; }
 
 /* ===== ABOUT ===== */
-.about-grid{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap:20px;
-}
+.about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
 @media(max-width:640px){ .about-grid{ grid-template-columns:1fr; } }
 
 .about-stat{
-    background:rgba(10,15,30,0.6);
-    backdrop-filter:blur(14px);
-    border-radius:16px;
-    padding:24px;
-    border:1px solid rgba(0,229,255,0.2);
-    text-align:center;
+    background:rgba(10,15,30,0.6); backdrop-filter:blur(14px);
+    border-radius:16px; padding:24px;
+    border:1px solid rgba(0,229,255,0.2); text-align:center;
 }
 .about-stat .num{
     font-size:2.2rem; font-weight:700;
@@ -1209,31 +299,193 @@ nav button.active{
 /* ===== CONTACT ===== */
 .contact-link{
     display:flex; align-items:center; gap:12px;
-    background:rgba(10,15,30,0.6);
-    backdrop-filter:blur(14px);
+    background:rgba(10,15,30,0.6); backdrop-filter:blur(14px);
     border-radius:16px; padding:20px 24px;
     border:1px solid rgba(0,229,255,0.2);
     color:#cbd5e1; text-decoration:none;
-    transition:0.25s; margin-bottom:12px;
+    transition:0.25s; margin-bottom:12px; cursor:none;
 }
-.contact-link:hover{
-    border-color:rgba(0,229,255,0.5);
-    color:#00e5ff;
-    transform:translateX(6px);
-}
+.contact-link:hover{ border-color:rgba(0,229,255,0.5); color:#00e5ff; transform:translateX(6px); }
 .contact-icon{ font-size:1.4rem; }
 
-/* ===== PROJECT TAGS ===== */
+/* ===== PROJECT CARDS ===== */
 .project h3{ margin-bottom:8px; color:#e2e8f0; }
 .project p{ color:#94a3b8; margin-bottom:12px; line-height:1.6; }
-.tags{ display:flex; flex-wrap:wrap; gap:6px; }
+
+.tags{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
 .tag{
-    font-size:0.75rem; padding:3px 10px;
-    border-radius:20px;
-    background:rgba(56,189,248,0.1);
-    border:1px solid rgba(56,189,248,0.25);
-    color:#38bdf8;
+    font-size:0.75rem; padding:3px 10px; border-radius:20px;
+    background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25);
+    color:#38bdf8; cursor:pointer; transition:0.2s;
 }
+.tag:hover{ background:rgba(56,189,248,0.2); }
+
+/* Project action buttons */
+.project-links{ display:flex; gap:8px; margin-top:4px; }
+.proj-btn{
+    flex:1; display:flex; align-items:center; justify-content:center; gap:6px;
+    padding:8px 12px; border-radius:10px;
+    font-size:0.8rem; font-weight:600; text-decoration:none;
+    border:1px solid; transition:0.25s; cursor:none;
+    letter-spacing:0.03em;
+}
+.proj-btn.github{
+    color:#94a3b8; border-color:rgba(148,163,184,0.25);
+    background:rgba(148,163,184,0.05);
+}
+.proj-btn.github:hover{
+    color:#e2e8f0; border-color:rgba(148,163,184,0.5);
+    background:rgba(148,163,184,0.1);
+}
+.proj-btn.demo{
+    color:#00e5ff; border-color:rgba(0,229,255,0.3);
+    background:rgba(0,229,255,0.05);
+}
+.proj-btn.demo:hover{
+    background:rgba(0,229,255,0.12);
+    border-color:rgba(0,229,255,0.6);
+    box-shadow:0 0 16px rgba(0,229,255,0.2);
+}
+
+/* ===== PROJECT FILTER BUTTONS ===== */
+.filter-bar{
+    display:flex; flex-wrap:wrap; gap:8px;
+    justify-content:center; margin-bottom:32px;
+}
+.filter-btn{
+    padding:7px 18px; border-radius:20px; font-size:0.82rem;
+    font-weight:500; letter-spacing:0.05em;
+    background:rgba(10,15,30,0.6); border:1px solid rgba(0,229,255,0.2);
+    color:#64748b; cursor:none; transition:0.25s; font-family:inherit;
+}
+.filter-btn:hover{ color:#00e5ff; border-color:rgba(0,229,255,0.4); }
+.filter-btn.active{
+    color:#00e5ff; border-color:rgba(0,229,255,0.5);
+    background:rgba(0,229,255,0.08);
+    box-shadow:0 0 14px rgba(0,229,255,0.15);
+}
+.project{ transition:0.3s, opacity 0.3s, transform 0.3s; }
+.project.hidden{ opacity:0; pointer-events:none; transform:scale(0.95); display:none; }
+
+/* ===== TIMELINE PAGE ===== */
+.timeline{
+    position:relative;
+    padding-left:40px;
+    max-width:700px;
+    margin:0 auto;
+}
+.timeline::before{
+    content:"";
+    position:absolute; left:12px; top:0; bottom:0;
+    width:2px;
+    background:linear-gradient(to bottom,#00e5ff,#7c3aed,transparent);
+}
+.tl-item{
+    position:relative;
+    margin-bottom:36px;
+    background:rgba(10,15,30,0.6);
+    backdrop-filter:blur(14px);
+    border-radius:16px; padding:22px 24px;
+    border:1px solid rgba(0,229,255,0.18);
+    transition:0.3s;
+}
+.tl-item:hover{ transform:translateX(6px); border-color:rgba(0,229,255,0.4); }
+/* Circle dot on the timeline line */
+.tl-item::before{
+    content:"";
+    position:absolute; left:-34px; top:24px;
+    width:14px; height:14px; border-radius:50%;
+    background:#00e5ff;
+    box-shadow:0 0 12px rgba(0,229,255,0.8);
+    border:2px solid #020617;
+}
+.tl-year{
+    font-size:0.75rem; font-weight:700;
+    letter-spacing:0.12em; text-transform:uppercase;
+    color:#00e5ff; margin-bottom:4px;
+}
+.tl-item h3{ color:#e2e8f0; font-size:1.05rem; margin-bottom:4px; }
+.tl-item p{ color:#94a3b8; font-size:0.9rem; line-height:1.55; }
+
+/* ===== RESUME PAGE ===== */
+#page-resume .inner{ text-align:center; }
+
+.resume-card{
+    background:rgba(10,15,30,0.6); backdrop-filter:blur(14px);
+    border-radius:20px; padding:50px 40px;
+    border:1px solid rgba(0,229,255,0.25);
+    max-width:500px; margin:0 auto;
+    display:flex; flex-direction:column; align-items:center; gap:20px;
+}
+.resume-icon{ font-size:4rem; }
+.resume-card h3{ font-size:1.4rem; color:#e2e8f0; }
+.resume-card p{ color:#94a3b8; line-height:1.6; font-size:0.95rem; }
+.download-btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:14px 32px; border-radius:14px;
+    background:linear-gradient(90deg,#2563eb,#7c3aed);
+    color:white; text-decoration:none;
+    font-weight:600; font-size:1rem;
+    box-shadow:0 0 28px rgba(0,200,255,0.35);
+    transition:0.3s; cursor:none; border:none; font-family:inherit;
+}
+.download-btn:hover{ transform:scale(1.05); box-shadow:0 0 44px rgba(0,229,255,0.5); }
+
+/* ===== TERMINAL PAGE ===== */
+#page-terminal .inner{ max-width:760px; }
+
+.terminal-window{
+    background:#0a0f1e;
+    border-radius:16px;
+    border:1px solid rgba(0,229,255,0.3);
+    overflow:hidden;
+    box-shadow:0 0 40px rgba(0,229,255,0.1);
+}
+.terminal-titlebar{
+    background:rgba(0,229,255,0.06);
+    padding:10px 16px;
+    display:flex; align-items:center; gap:8px;
+    border-bottom:1px solid rgba(0,229,255,0.15);
+}
+.dot{ width:12px; height:12px; border-radius:50%; }
+.dot.red{ background:#ff5f57; }
+.dot.yellow{ background:#febc2e; }
+.dot.green{ background:#28c840; }
+.terminal-title{ color:#475569; font-size:0.82rem; margin-left:6px; }
+
+.terminal-body{
+    padding:20px;
+    font-family:'Courier New', monospace;
+    font-size:0.9rem;
+    min-height:360px;
+    max-height:480px;
+    overflow-y:auto;
+    line-height:1.7;
+}
+.terminal-body::-webkit-scrollbar{ width:4px; }
+.terminal-body::-webkit-scrollbar-thumb{ background:rgba(0,229,255,0.2); border-radius:4px; }
+
+.t-line{ margin-bottom:2px; }
+.t-prompt{ color:#00e5ff; }
+.t-output{ color:#94a3b8; }
+.t-success{ color:#4ade80; }
+.t-error{ color:#f87171; }
+.t-info{ color:#38bdf8; }
+.t-bold{ color:#e2e8f0; font-weight:600; }
+
+.terminal-input-row{
+    display:flex; align-items:center;
+    padding:12px 20px;
+    border-top:1px solid rgba(0,229,255,0.1);
+    background:rgba(0,229,255,0.02);
+}
+.terminal-input-row span{ color:#00e5ff; font-family:'Courier New', monospace; margin-right:8px; white-space:nowrap; }
+#terminal-input{
+    flex:1; background:none; border:none; outline:none;
+    color:#e2e8f0; font-family:'Courier New', monospace;
+    font-size:0.9rem; cursor:none;
+}
+#terminal-input::placeholder{ color:#334155; }
 
 /* ===== FOOTER ===== */
 footer{
@@ -1241,64 +493,67 @@ footer{
     background:#020617; color:#94a3b8;
     border-top:1px solid rgba(0,229,255,0.15);
 }
+
+/* ===== REDUCED MOTION ===== */
+@media(prefers-reduced-motion:reduce){
+    *, *::before, *::after{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+    .reveal, .reveal-grid > *{ opacity:1; transform:none; }
+}
 </style>
 </head>
 <body>
+
+<!-- Custom cursor elements -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Scroll progress bar -->
+<div id="progress-bar"></div>
 
 <canvas id="particles"></canvas>
 
 <!-- ===== NAV ===== -->
 <nav id="navbar">
-    <button onclick="showPage('home')"     class="active" data-page="home">Home</button>
-    <button onclick="showPage('about')"    data-page="about">About</button>
-    <button onclick="showPage('degrees')"  data-page="degrees">Degrees</button>
-    <button onclick="showPage('skills')"   data-page="skills">Skills</button>
-    <button onclick="showPage('projects')" data-page="projects">Projects</button>
-    <button onclick="showPage('contact')"  data-page="contact">Contact</button>
+    <button onclick="showPage('home')"     class="active" data-page="home">Home <span class="kbd">1</span></button>
+    <button onclick="showPage('about')"    data-page="about">About <span class="kbd">2</span></button>
+    <button onclick="showPage('degrees')"  data-page="degrees">Degrees <span class="kbd">3</span></button>
+    <button onclick="showPage('skills')"   data-page="skills">Skills <span class="kbd">4</span></button>
+    <button onclick="showPage('projects')" data-page="projects">Projects <span class="kbd">5</span></button>
+    <button onclick="showPage('timeline')" data-page="timeline">Timeline <span class="kbd">6</span></button>
+    <button onclick="showPage('terminal')" data-page="terminal">Terminal <span class="kbd">7</span></button>
+    <button onclick="showPage('resume')"   data-page="resume">Resume <span class="kbd">8</span></button>
+    <button onclick="showPage('contact')"  data-page="contact">Contact <span class="kbd">9</span></button>
 </nav>
 
-<!-- ===== HOME PAGE ===== -->
+<!-- ===== HOME ===== -->
 <div class="page active" id="page-home">
     <h1>Dhruv Pandya</h1>
-    <h2>Artificial Intelligence & Technology Student</h2>
+    <h2><span id="typewriter"></span></h2>
     <p>Passionate about Artificial Intelligence, Cybersecurity, Software Development, Cloud Systems, and futuristic computing.</p>
     <button class="btn" onclick="showPage('projects')">Explore My Work</button>
 </div>
 
-<!-- ===== ABOUT PAGE ===== -->
+<!-- ===== ABOUT ===== -->
 <div class="page" id="page-about">
     <div class="inner">
-        <h2 class="section-title">About Me</h2>
-        <div class="card" style="margin-bottom:24px;">
-            Computer Science & IT student focused on Artificial Intelligence, automation, and next-generation systems. I enjoy building tools that sit at the intersection of security and intelligent computing — from home lab infrastructure to AI-driven applications.
+        <h2 class="section-title reveal">About Me</h2>
+        <div class="card reveal" style="margin-bottom:24px;">
+            Computer Science &amp; IT student focused on Artificial Intelligence, automation, and next-generation systems. I enjoy building tools that sit at the intersection of security and intelligent computing — from home lab infrastructure to AI-driven applications.
         </div>
-        <div class="about-grid">
-            <div class="about-stat">
-                <div class="num">3+</div>
-                <div class="label">Years Coding</div>
-            </div>
-            <div class="about-stat">
-                <div class="num">4</div>
-                <div class="label">Major Projects</div>
-            </div>
-            <div class="about-stat">
-                <div class="num">2</div>
-                <div class="label">Certifications</div>
-            </div>
-            <div class="about-stat">
-                <div class="num">∞</div>
-                <div class="label">Curiosity</div>
-            </div>
+        <div class="about-grid reveal-grid">
+            <div class="about-stat"><div class="num">3+</div><div class="label">Years Coding</div></div>
+            <div class="about-stat"><div class="num">4</div><div class="label">Major Projects</div></div>
+            <div class="about-stat"><div class="num">2</div><div class="label">Certifications</div></div>
+            <div class="about-stat"><div class="num">∞</div><div class="label">Curiosity</div></div>
         </div>
     </div>
 </div>
 
-<!-- ===== DEGREES PAGE ===== -->
+<!-- ===== DEGREES ===== -->
 <div class="page" id="page-degrees">
     <div class="inner">
-        <h2 class="section-title">Degrees & Education</h2>
-        <div class="grid">
-
+        <h2 class="section-title reveal">Degrees &amp; Education</h2>
+        <div class="grid reveal-grid">
             <div class="degree-card">
                 <span class="degree-badge">In Progress</span>
                 <h3>B.S. Computer Science</h3>
@@ -1306,7 +561,6 @@ footer{
                 <div class="year">Expected 2027</div>
                 <p>Specialization in Artificial Intelligence and Machine Learning. Coursework includes deep learning, algorithms, and distributed systems.</p>
             </div>
-
             <div class="degree-card">
                 <span class="degree-badge">Certification</span>
                 <h3>CompTIA A+</h3>
@@ -1314,7 +568,6 @@ footer{
                 <div class="year">2025</div>
                 <p>Industry-recognized certification covering core cybersecurity skills, network defense, and threat management.</p>
             </div>
-
             <div class="degree-card">
                 <span class="degree-badge">Certification</span>
                 <h3>AWS Cloud Practitioner</h3>
@@ -1322,16 +575,15 @@ footer{
                 <div class="year">2024</div>
                 <p>Foundational understanding of AWS cloud services, architecture, security, and pricing models.</p>
             </div>
-
         </div>
     </div>
 </div>
 
-<!-- ===== SKILLS PAGE ===== -->
+<!-- ===== SKILLS ===== -->
 <div class="page" id="page-skills">
     <div class="inner">
-        <h2 class="section-title">Skills</h2>
-        <div class="skills">
+        <h2 class="section-title reveal">Skills</h2>
+        <div class="skills reveal-grid">
             <div class="skill">Python</div>
             <div class="skill">Artificial Intelligence</div>
             <div class="skill">Machine Learning</div>
@@ -1348,13 +600,23 @@ footer{
     </div>
 </div>
 
-<!-- ===== PROJECTS PAGE ===== -->
+<!-- ===== PROJECTS ===== -->
 <div class="page" id="page-projects">
     <div class="inner">
-        <h2 class="section-title">Projects</h2>
-        <div class="grid">
+        <h2 class="section-title reveal">Projects</h2>
 
-            <div class="project">
+        <!-- Filter bar -->
+        <div class="filter-bar reveal">
+            <button class="filter-btn active" onclick="filterProjects('all')">All</button>
+            <button class="filter-btn" onclick="filterProjects('AI')">AI</button>
+            <button class="filter-btn" onclick="filterProjects('Security')">Security</button>
+            <button class="filter-btn" onclick="filterProjects('Web')">Web</button>
+            <button class="filter-btn" onclick="filterProjects('Infra')">Infrastructure</button>
+        </div>
+
+        <div class="grid reveal-grid" id="projects-grid">
+
+            <div class="project" data-tags="AI,Python">
                 <h3>AI Assistant System</h3>
                 <p>Intelligent automation and AI-based interaction system with natural language processing capabilities.</p>
                 <div class="tags">
@@ -1362,9 +624,19 @@ footer{
                     <span class="tag">NLP</span>
                     <span class="tag">AI</span>
                 </div>
+                <div class="project-links">
+                    <a class="proj-btn github" href="https://github.com/dhruv7890" target="_blank">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                    <a class="proj-btn demo" href="#" target="_blank">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        Live Demo
+                    </a>
+                </div>
             </div>
 
-            <div class="project">
+            <div class="project" data-tags="Infra,Linux">
                 <h3>Home Lab Infrastructure</h3>
                 <p>Self-hosted servers and networking environment for testing and development.</p>
                 <div class="tags">
@@ -1372,9 +644,19 @@ footer{
                     <span class="tag">Networking</span>
                     <span class="tag">Docker</span>
                 </div>
+                <div class="project-links">
+                    <a class="proj-btn github" href="https://github.com/dhruv7890" target="_blank">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                    <a class="proj-btn demo" href="#" target="_blank">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        Live Demo
+                    </a>
+                </div>
             </div>
 
-            <div class="project">
+            <div class="project" data-tags="Security">
                 <h3>Cybersecurity Labs</h3>
                 <p>Ethical hacking, penetration testing, and defense systems research environment.</p>
                 <div class="tags">
@@ -1382,9 +664,19 @@ footer{
                     <span class="tag">Security</span>
                     <span class="tag">Kali Linux</span>
                 </div>
+                <div class="project-links">
+                    <a class="proj-btn github" href="https://github.com/dhruv7890" target="_blank">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                    <a class="proj-btn demo" href="#" target="_blank">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        Live Demo
+                    </a>
+                </div>
             </div>
 
-            <div class="project">
+            <div class="project" data-tags="Web">
                 <h3>Web Development</h3>
                 <p>Modern responsive applications and UI systems built with cutting-edge frameworks.</p>
                 <div class="tags">
@@ -1392,31 +684,123 @@ footer{
                     <span class="tag">HTML/CSS</span>
                     <span class="tag">JS</span>
                 </div>
+                <div class="project-links">
+                    <a class="proj-btn github" href="https://github.com/dhruv7890" target="_blank">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                    <a class="proj-btn demo" href="#" target="_blank">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        Live Demo
+                    </a>
+                </div>
             </div>
 
         </div>
     </div>
 </div>
 
-<!-- ===== CONTACT PAGE ===== -->
+<!-- ===== TIMELINE ===== -->
+<div class="page" id="page-timeline">
+    <div class="inner">
+        <h2 class="section-title reveal">My Journey</h2>
+        <div class="timeline">
+
+            <div class="tl-item reveal">
+                <div class="tl-year">2022</div>
+                <h3>Started Coding</h3>
+                <p>Wrote my first Python scripts and discovered a passion for automation and problem-solving. Started exploring web technologies.</p>
+            </div>
+
+            <div class="tl-item reveal">
+                <div class="tl-year">2023</div>
+                <h3>Entered University</h3>
+                <p>Enrolled in B.S. Computer Science with a focus on AI/ML. Began building personal projects and exploring cybersecurity fundamentals.</p>
+            </div>
+
+            <div class="tl-item reveal">
+                <div class="tl-year">2024</div>
+                <h3>AWS Cloud Practitioner</h3>
+                <p>Earned foundational AWS certification. Deployed first cloud-hosted applications and set up home lab infrastructure with Docker and Linux.</p>
+            </div>
+
+            <div class="tl-item reveal">
+                <div class="tl-year">2025</div>
+                <h3>CompTIA A+ Certified</h3>
+                <p>Completed CompTIA A+ certification. Deep-dived into penetration testing, Kali Linux, and ethical hacking methodologies.</p>
+            </div>
+
+            <div class="tl-item reveal">
+                <div class="tl-year">2027 →</div>
+                <h3>B.S. Computer Science (Expected)</h3>
+                <p>Graduating with a specialization in Artificial Intelligence and Machine Learning. Open to full-time roles in AI, security, and cloud engineering.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ===== TERMINAL ===== -->
+<div class="page" id="page-terminal">
+    <div class="inner">
+        <h2 class="section-title reveal">Interactive Terminal</h2>
+        <p class="reveal" style="text-align:center;color:#64748b;margin-bottom:24px;font-size:0.9rem;">Type <strong style="color:#00e5ff">help</strong> to see available commands</p>
+        <div class="terminal-window reveal">
+            <div class="terminal-titlebar">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+                <span class="terminal-title">dhruv@portfolio ~ $</span>
+            </div>
+            <div class="terminal-body" id="terminal-output">
+                <div class="t-line"><span class="t-success">Welcome to Dhruv Pandya's portfolio terminal.</span></div>
+                <div class="t-line"><span class="t-output">Type <span class="t-info">help</span> to see available commands.</span></div>
+                <div class="t-line">&nbsp;</div>
+            </div>
+            <div class="terminal-input-row">
+                <span>dhruv@portfolio:~$</span>
+                <input type="text" id="terminal-input" placeholder="enter command..." autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== RESUME ===== -->
+<div class="page" id="page-resume">
+    <div class="inner">
+        <h2 class="section-title reveal">Resume</h2>
+        <div class="resume-card reveal">
+            <div class="resume-icon">📄</div>
+            <h3>Dhruv Pandya — Resume</h3>
+            <p>Download my latest resume to learn more about my education, projects, skills, and certifications. Updated June 2026.</p>
+            <!-- Replace href with the actual path to your resume PDF -->
+            <a class="download-btn" href="resume.pdf" download="Dhruv_Pandya_Resume.pdf">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Resume (PDF)
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- ===== CONTACT ===== -->
 <div class="page" id="page-contact">
     <div class="inner">
-        <h2 class="section-title">Contact</h2>
-        <a class="contact-link" href="https://github.com/dhruv7890" target="_blank">
+        <h2 class="section-title reveal">Contact</h2>
+        <a class="contact-link reveal" href="https://github.com/dhruv7890" target="_blank">
             <span class="contact-icon">🐙</span>
             <div>
                 <div style="font-weight:600;color:#e2e8f0;">GitHub</div>
                 <div style="font-size:0.85rem;color:#64748b;">github.com/dhruv7890</div>
             </div>
         </a>
-        <a class="contact-link" href="mailto:your@email.com">
+        <a class="contact-link reveal" href="mailto:your@email.com">
             <span class="contact-icon">✉️</span>
             <div>
                 <div style="font-weight:600;color:#e2e8f0;">Email</div>
                 <div style="font-size:0.85rem;color:#64748b;">your@email.com</div>
             </div>
         </a>
-        <a class="contact-link" href="https://linkedin.com" target="_blank">
+        <a class="contact-link reveal" href="https://linkedin.com" target="_blank">
             <span class="contact-icon">💼</span>
             <div>
                 <div style="font-weight:600;color:#e2e8f0;">LinkedIn</div>
@@ -1429,25 +813,295 @@ footer{
 <footer>© 2026 Dhruv Pandya. All Rights Reserved.</footer>
 
 <script>
-/* ===== PAGE ROUTING ===== */
+/* ============================================================
+   PAGE ROUTER
+   ============================================================ */
 function showPage(name){
-    // hide all pages
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    // show target
     const target = document.getElementById('page-' + name);
     if(target) target.classList.add('active');
-    // update nav
     document.querySelectorAll('nav button').forEach(b => {
         b.classList.toggle('active', b.dataset.page === name);
     });
-    // scroll to top
     window.scrollTo({ top:0, behavior:'smooth' });
+    // Re-trigger scroll reveal for the new page
+    setTimeout(triggerReveal, 50);
 }
 
-/* ===== PARTICLES ===== */
+/* ============================================================
+   KEYBOARD NAVIGATION  (keys 1–9)
+   ============================================================ */
+const pages = ['home','about','degrees','skills','projects','timeline','terminal','resume','contact'];
+document.addEventListener('keydown', e => {
+    // Don't intercept keys while typing in the terminal input
+    if(document.activeElement === document.getElementById('terminal-input')) return;
+    const idx = parseInt(e.key) - 1;
+    if(idx >= 0 && idx < pages.length) showPage(pages[idx]);
+});
+
+/* ============================================================
+   CUSTOM CURSOR
+   ============================================================ */
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursor-ring');
+let cx = 0, cy = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+    cx = e.clientX; cy = e.clientY;
+    cursor.style.left = cx + 'px';
+    cursor.style.top  = cy + 'px';
+});
+
+// Ring follows with slight lag for a smooth trailing feel
+function animateRing(){
+    rx += (cx - rx) * 0.18;
+    ry += (cy - ry) * 0.18;
+    cursorRing.style.left = rx + 'px';
+    cursorRing.style.top  = ry + 'px';
+    requestAnimationFrame(animateRing);
+}
+animateRing();
+
+/* ============================================================
+   SCROLL PROGRESS BAR
+   ============================================================ */
+const progressBar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = pct + '%';
+});
+
+/* ============================================================
+   SCROLL REVEAL
+   Uses IntersectionObserver to add .visible when elements
+   enter the viewport. Called on page switch too.
+   ============================================================ */
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.12 });
+
+function triggerReveal(){
+    document.querySelectorAll('.reveal, .reveal-grid').forEach(el => {
+        // If already visible, skip
+        if(!el.classList.contains('visible')) revealObserver.observe(el);
+    });
+}
+triggerReveal();
+
+/* ============================================================
+   TYPEWRITER EFFECT
+   Cycles through an array of role strings, typing each out
+   character by character, pausing, then deleting before
+   moving to the next.
+   ============================================================ */
+const roles = [
+    'Artificial Intelligence Student',
+    'Cybersecurity Enthusiast',
+    'Software Developer',
+    'Cloud & Infrastructure Nerd',
+    'Penetration Tester',
+];
+let roleIdx = 0, charIdx = 0, deleting = false;
+const tw = document.getElementById('typewriter');
+
+function typeWriter(){
+    const current = roles[roleIdx];
+    if(deleting){
+        tw.textContent = current.slice(0, --charIdx);
+        if(charIdx === 0){
+            deleting = false;
+            roleIdx = (roleIdx + 1) % roles.length;
+            setTimeout(typeWriter, 500);
+            return;
+        }
+        setTimeout(typeWriter, 45);
+    } else {
+        tw.textContent = current.slice(0, ++charIdx);
+        if(charIdx === current.length){
+            deleting = true;
+            setTimeout(typeWriter, 2000); // pause before deleting
+            return;
+        }
+        setTimeout(typeWriter, 80);
+    }
+}
+typeWriter();
+
+/* ============================================================
+   ANIMATED GRADIENT TITLE (h1) — handled by CSS keyframe
+   ============================================================ */
+
+/* ============================================================
+   PROJECT TAG FILTERING
+   Each project card has a data-tags attribute with comma-
+   separated category keys. The filter buttons show/hide
+   cards based on whether the active filter appears in the
+   card's tags.
+   ============================================================ */
+function filterProjects(tag){
+    // Update active button
+    document.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.toggle('active', b.textContent.trim() === tag || (tag === 'all' && b.textContent.trim() === 'All'));
+    });
+    // Show/hide project cards
+    document.querySelectorAll('#projects-grid .project').forEach(card => {
+        const tags = card.dataset.tags || '';
+        const show = tag === 'all' || tags.includes(tag);
+        card.classList.toggle('hidden', !show);
+    });
+}
+
+/* ============================================================
+   INTERACTIVE TERMINAL
+   Supports commands: help, about, skills, projects, contact,
+   clear, whoami, date, echo, navigate
+   ============================================================ */
+const termOut = document.getElementById('terminal-output');
+const termIn  = document.getElementById('terminal-input');
+
+// Command history for ↑/↓ navigation
+let cmdHistory = [], histIdx = -1;
+
+const COMMANDS = {
+    help(){
+        return [
+            {cls:'t-info',  txt:'Available commands:'},
+            {cls:'t-output',txt:'  <span class="t-bold">about</span>      — Who is Dhruv?'},
+            {cls:'t-output',txt:'  <span class="t-bold">skills</span>     — List of technical skills'},
+            {cls:'t-output',txt:'  <span class="t-bold">projects</span>   — Show projects'},
+            {cls:'t-output',txt:'  <span class="t-bold">contact</span>    — Contact information'},
+            {cls:'t-output',txt:'  <span class="t-bold">navigate X</span> — Go to page X (home/about/degrees/skills/projects/timeline/resume/contact)'},
+            {cls:'t-output',txt:'  <span class="t-bold">whoami</span>     — Current user info'},
+            {cls:'t-output',txt:'  <span class="t-bold">date</span>       — Current date & time'},
+            {cls:'t-output',txt:'  <span class="t-bold">echo [text]</span>— Print text'},
+            {cls:'t-output',txt:'  <span class="t-bold">clear</span>      — Clear terminal'},
+        ];
+    },
+    about(){
+        return [
+            {cls:'t-success',txt:'Dhruv Pandya — CS Student & AI Enthusiast'},
+            {cls:'t-output', txt:'Focused on AI, cybersecurity, cloud, and automation.'},
+            {cls:'t-output', txt:'Building at the intersection of intelligence and security.'},
+            {cls:'t-output', txt:'3+ years coding · 4 major projects · 2 certifications'},
+        ];
+    },
+    skills(){
+        return [
+            {cls:'t-info',   txt:'Technical Skills:'},
+            {cls:'t-output', txt:'  Languages  : Python, Bash, JavaScript'},
+            {cls:'t-output', txt:'  AI/ML      : NLP, Machine Learning, Neural Networks'},
+            {cls:'t-output', txt:'  Security   : Penetration Testing, Kali Linux, CTFs'},
+            {cls:'t-output', txt:'  Infra      : Linux, Docker, Networking, AWS'},
+            {cls:'t-output', txt:'  Web        : React, HTML/CSS, Git'},
+        ];
+    },
+    projects(){
+        return [
+            {cls:'t-info',   txt:'Projects:'},
+            {cls:'t-success',txt:'  [1] AI Assistant System     — Python, NLP, AI'},
+            {cls:'t-success',txt:'  [2] Home Lab Infrastructure  — Linux, Networking, Docker'},
+            {cls:'t-success',txt:'  [3] Cybersecurity Labs       — Pen Testing, Kali Linux'},
+            {cls:'t-success',txt:'  [4] Web Development          — React, HTML/CSS, JS'},
+            {cls:'t-output', txt:'  Type <span class="t-info">navigate projects</span> to view full cards.'},
+        ];
+    },
+    contact(){
+        return [
+            {cls:'t-info',   txt:'Contact:'},
+            {cls:'t-output', txt:'  GitHub  : github.com/dhruv7890'},
+            {cls:'t-output', txt:'  Email   : your@email.com'},
+            {cls:'t-output', txt:'  LinkedIn: linkedin.com/in/yourprofile'},
+        ];
+    },
+    whoami(){
+        return [{cls:'t-success', txt:'dhruv — CS Student, AI & Cybersecurity Enthusiast'}];
+    },
+    date(){
+        return [{cls:'t-output', txt: new Date().toString()}];
+    },
+    clear(){
+        termOut.innerHTML = '';
+        return [];
+    },
+};
+
+function termPrint(lines){
+    lines.forEach(({cls, txt}) => {
+        const div = document.createElement('div');
+        div.className = 't-line';
+        div.innerHTML = `<span class="${cls}">${txt}</span>`;
+        termOut.appendChild(div);
+    });
+    // blank line after output
+    const blank = document.createElement('div');
+    blank.className = 't-line';
+    blank.innerHTML = '&nbsp;';
+    termOut.appendChild(blank);
+    termOut.scrollTop = termOut.scrollHeight;
+}
+
+function runCommand(raw){
+    const parts = raw.trim().split(/\s+/);
+    const cmd   = parts[0].toLowerCase();
+    const args  = parts.slice(1);
+
+    // Echo the prompt + command
+    const promptLine = document.createElement('div');
+    promptLine.className = 't-line';
+    promptLine.innerHTML = `<span class="t-prompt">dhruv@portfolio:~$ </span><span style="color:#e2e8f0">${raw}</span>`;
+    termOut.appendChild(promptLine);
+
+    if(!cmd){ termOut.scrollTop = termOut.scrollHeight; return; }
+
+    if(cmd === 'echo'){
+        termPrint([{cls:'t-output', txt: args.join(' ') || ''}]);
+    } else if(cmd === 'navigate'){
+        const dest = args[0];
+        if(pages.includes(dest)){
+            termPrint([{cls:'t-success', txt:`Navigating to ${dest}...`}]);
+            setTimeout(()=>showPage(dest), 500);
+        } else {
+            termPrint([{cls:'t-error', txt:`Unknown page: ${dest}. Try: ${pages.join(', ')}`}]);
+        }
+    } else if(COMMANDS[cmd]){
+        termPrint(COMMANDS[cmd]());
+    } else {
+        termPrint([{cls:'t-error', txt:`command not found: ${cmd}. Type <span class="t-info">help</span> for a list.`}]);
+    }
+}
+
+termIn.addEventListener('keydown', e => {
+    if(e.key === 'Enter'){
+        const val = termIn.value;
+        if(val.trim()) cmdHistory.unshift(val);
+        histIdx = -1;
+        runCommand(val);
+        termIn.value = '';
+    } else if(e.key === 'ArrowUp'){
+        e.preventDefault();
+        if(histIdx < cmdHistory.length - 1){ histIdx++; termIn.value = cmdHistory[histIdx]; }
+    } else if(e.key === 'ArrowDown'){
+        e.preventDefault();
+        if(histIdx > 0){ histIdx--; termIn.value = cmdHistory[histIdx]; }
+        else { histIdx = -1; termIn.value = ''; }
+    }
+});
+
+// Click anywhere in terminal window to focus input
+document.querySelector('.terminal-window')?.addEventListener('click', () => termIn.focus());
+
+/* ============================================================
+   PARTICLES (unchanged)
+   ============================================================ */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
-
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
@@ -1456,7 +1110,11 @@ const numberOfParticles = 90;
 let mouse = { x:null, y:null, radius:120 };
 
 window.addEventListener("mousemove", e=>{ mouse.x=e.x; mouse.y=e.y; });
-window.addEventListener("resize", ()=>{ canvas.width=window.innerWidth; canvas.height=window.innerHeight; init(); });
+window.addEventListener("resize", ()=>{
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+    init();
+});
 
 class Particle{
     constructor(x,y,dx,dy,size){ this.x=x; this.y=y; this.dx=dx; this.dy=dy; this.size=size; }
@@ -1477,7 +1135,6 @@ class Particle{
         this.draw();
     }
 }
-
 function init(){
     particlesArray=[];
     for(let i=0;i<numberOfParticles;i++){
@@ -1488,7 +1145,6 @@ function init(){
         ));
     }
 }
-
 function connect(){
     for(let a=0;a<particlesArray.length;a++){
         for(let b=a;b<particlesArray.length;b++){
@@ -1504,14 +1160,12 @@ function connect(){
         }
     }
 }
-
 function animate(){
     requestAnimationFrame(animate);
     ctx.clearRect(0,0,canvas.width,canvas.height);
     particlesArray.forEach(p=>p.update());
     connect();
 }
-
 init();
 animate();
 </script>
