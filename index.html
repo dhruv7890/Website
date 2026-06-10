@@ -6,7 +6,7 @@
 <title>Dhruv Pandya | Portfolio</title>
 <style>
 *{ margin:0; padding:0; box-sizing:border-box; }
-
+ 
 body{
     font-family:'Segoe UI', Arial, sans-serif;
     background: radial-gradient(circle at top, #020617, #000);
@@ -15,7 +15,7 @@ body{
     min-height:100vh;
     cursor:none; /* hide default cursor — replaced by custom cursor */
 }
-
+ 
 /* ===== CUSTOM CURSOR ===== */
 #cursor{
     position:fixed;
@@ -43,7 +43,7 @@ body:has(button:hover) #cursor-ring{
     width:52px; height:52px;
     border-color:rgba(0,229,255,0.8);
 }
-
+ 
 /* ===== SCROLL PROGRESS BAR ===== */
 #progress-bar{
     position:fixed;
@@ -55,13 +55,13 @@ body:has(button:hover) #cursor-ring{
     transition:width 0.1s linear;
     box-shadow:0 0 10px rgba(0,229,255,0.6);
 }
-
+ 
 /* ===== PARTICLES CANVAS ===== */
 #particles{
     position:fixed; top:0; left:0;
     width:100%; height:100%; z-index:-3;
 }
-
+ 
 body::before{
     content:"";
     position:fixed; top:-50%; left:-50%;
@@ -72,13 +72,13 @@ body::before{
     animation: floatGlow 14s linear infinite;
     z-index:-2;
 }
-
+ 
 @keyframes floatGlow{
     0%{transform:translate(0,0);}
     50%{transform:translate(3%,5%);}
     100%{transform:translate(0,0);}
 }
-
+ 
 /* ===== NAV ===== */
 nav{
     position:fixed; top:3px; left:0; width:100%; z-index:100;
@@ -89,7 +89,7 @@ nav{
     border-bottom:1px solid rgba(0,229,255,0.15);
     flex-wrap:wrap;
 }
-
+ 
 nav button{
     color:#94a3b8;
     background:none;
@@ -103,14 +103,14 @@ nav button{
     transition:0.25s;
     font-family:inherit;
 }
-
+ 
 nav button:hover, nav button.active{
     color:#00e5ff;
     border-color:rgba(0,229,255,0.35);
     background:rgba(0,229,255,0.07);
     text-shadow:0 0 12px rgba(0,229,255,0.6);
 }
-
+ 
 /* Keyboard shortcut hint badge on nav buttons */
 nav button .kbd{
     display:inline-block;
@@ -125,16 +125,16 @@ nav button .kbd{
     transition:0.25s;
 }
 nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(0,229,255,0.3); }
-
+ 
 /* ===== PAGES ===== */
 .page{ display:none; min-height:100vh; padding-top:72px; animation:fadeIn 0.4s ease; }
 .page.active{ display:block; }
-
+ 
 @keyframes fadeIn{
     from{ opacity:0; transform:translateY(16px); }
     to{ opacity:1; transform:translateY(0); }
 }
-
+ 
 /* ===== HOME PAGE ===== */
 #page-home{
     display:none; flex-direction:column;
@@ -142,7 +142,7 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
     text-align:center; padding:100px 20px 40px;
 }
 #page-home.active{ display:flex; }
-
+ 
 #page-home h1{
     font-size:4rem;
     background:linear-gradient(90deg,#00e5ff,#3b82f6,#a855f7,#00e5ff);
@@ -151,14 +151,14 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
     -webkit-text-fill-color:transparent;
     animation:gradientShift 6s linear infinite;
 }
-
+ 
 @keyframes gradientShift{
     0%{background-position:0% 50%;}
     100%{background-position:300% 50%;}
 }
-
+ 
 #page-home h2{ color:#38bdf8; margin:10px 0 20px; font-size:1.2rem; min-height:1.8em; }
-
+ 
 /* Typewriter cursor blink */
 #typewriter::after{
     content:"|";
@@ -166,9 +166,9 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
     color:#00e5ff;
 }
 @keyframes blink{ 50%{opacity:0;} }
-
+ 
 #page-home p{ max-width:700px; color:#cbd5e1; line-height:1.7; }
-
+ 
 .btn{
     display:inline-block; margin-top:25px;
     padding:12px 28px; border-radius:12px;
@@ -179,15 +179,15 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
     border:none; font-family:inherit; font-size:1rem;
 }
 .btn:hover{ transform:scale(1.05); box-shadow:0 0 40px rgba(0,229,255,0.6); }
-
+ 
 /* ===== INNER CONTENT WRAPPER ===== */
 .inner{ max-width:1100px; margin:auto; padding:60px 20px 80px; }
-
+ 
 .section-title{
     font-size:2.5rem; margin-bottom:40px;
     color:#38bdf8; text-align:center;
 }
-
+ 
 /* ===== SCROLL REVEAL ===== */
 .reveal{
     opacity:0;
@@ -206,7 +206,7 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
 .reveal-grid.visible > *:nth-child(4){ opacity:1; transform:none; transition-delay:0.3s; }
 .reveal-grid.visible > *:nth-child(5){ opacity:1; transform:none; transition-delay:0.4s; }
 .reveal-grid.visible > *:nth-child(6){ opacity:1; transform:none; transition-delay:0.5s; }
-
+ 
 /* ===== CARDS ===== */
 .card, .project{
     position:relative;
@@ -228,7 +228,7 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
     pointer-events:none;
 }
 @keyframes borderMove{ 0%{background-position:0% 50%;} 100%{background-position:100% 50%;} }
-
+ 
 .card::after, .project::after{
     content:""; position:absolute; top:-100%; left:0;
     width:100%; height:200%;
@@ -237,13 +237,13 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
 }
 @keyframes scan{ 0%{transform:translateY(-50%);} 100%{transform:translateY(50%);} }
 .card:hover, .project:hover{ transform:translateY(-6px); }
-
+ 
 .grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
     gap:20px;
 }
-
+ 
 /* ===== SKILLS ===== */
 .skills{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
 .skill{
@@ -252,7 +252,7 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
     border:1px solid rgba(0,229,255,0.25);
     color:#e2e8f0;
 }
-
+ 
 /* ===== DEGREE CARDS ===== */
 .degree-card{
     position:relative; background:rgba(10,15,30,0.6);
@@ -279,11 +279,11 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
 .degree-card .school{ color:#38bdf8; font-size:0.95rem; }
 .degree-card .year{ color:#64748b; font-size:0.85rem; }
 .degree-card p{ color:#94a3b8; font-size:0.9rem; line-height:1.5; margin-top:4px; }
-
+ 
 /* ===== ABOUT ===== */
 .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
 @media(max-width:640px){ .about-grid{ grid-template-columns:1fr; } }
-
+ 
 .about-stat{
     background:rgba(10,15,30,0.6); backdrop-filter:blur(14px);
     border-radius:16px; padding:24px;
@@ -295,7 +295,7 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
     -webkit-background-clip:text; -webkit-text-fill-color:transparent;
 }
 .about-stat .label{ color:#94a3b8; font-size:0.9rem; margin-top:4px; }
-
+ 
 /* ===== CONTACT ===== */
 .contact-link{
     display:flex; align-items:center; gap:12px;
@@ -307,11 +307,11 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
 }
 .contact-link:hover{ border-color:rgba(0,229,255,0.5); color:#00e5ff; transform:translateX(6px); }
 .contact-icon{ font-size:1.4rem; }
-
+ 
 /* ===== PROJECT CARDS ===== */
 .project h3{ margin-bottom:8px; color:#e2e8f0; }
 .project p{ color:#94a3b8; margin-bottom:12px; line-height:1.6; }
-
+ 
 .tags{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
 .tag{
     font-size:0.75rem; padding:3px 10px; border-radius:20px;
@@ -319,7 +319,7 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
     color:#38bdf8; cursor:pointer; transition:0.2s;
 }
 .tag:hover{ background:rgba(56,189,248,0.2); }
-
+ 
 /* Project action buttons */
 .project-links{ display:flex; gap:8px; margin-top:4px; }
 .proj-btn{
@@ -346,7 +346,7 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
     border-color:rgba(0,229,255,0.6);
     box-shadow:0 0 16px rgba(0,229,255,0.2);
 }
-
+ 
 /* ===== PROJECT FILTER BUTTONS ===== */
 .filter-bar{
     display:flex; flex-wrap:wrap; gap:8px;
@@ -366,7 +366,7 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
 }
 .project{ transition:0.3s, opacity 0.3s, transform 0.3s; }
 .project.hidden{ opacity:0; pointer-events:none; transform:scale(0.95); display:none; }
-
+ 
 /* ===== TIMELINE PAGE ===== */
 .timeline{
     position:relative;
@@ -406,10 +406,10 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
 }
 .tl-item h3{ color:#e2e8f0; font-size:1.05rem; margin-bottom:4px; }
 .tl-item p{ color:#94a3b8; font-size:0.9rem; line-height:1.55; }
-
+ 
 /* ===== RESUME PAGE ===== */
 #page-resume .inner{ text-align:center; }
-
+ 
 .resume-card{
     background:rgba(10,15,30,0.6); backdrop-filter:blur(14px);
     border-radius:20px; padding:50px 40px;
@@ -430,10 +430,10 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
     transition:0.3s; cursor:none; border:none; font-family:inherit;
 }
 .download-btn:hover{ transform:scale(1.05); box-shadow:0 0 44px rgba(0,229,255,0.5); }
-
+ 
 /* ===== TERMINAL PAGE ===== */
 #page-terminal .inner{ max-width:760px; }
-
+ 
 .terminal-window{
     background:#0a0f1e;
     border-radius:16px;
@@ -452,7 +452,7 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
 .dot.yellow{ background:#febc2e; }
 .dot.green{ background:#28c840; }
 .terminal-title{ color:#475569; font-size:0.82rem; margin-left:6px; }
-
+ 
 .terminal-body{
     padding:20px;
     font-family:'Courier New', monospace;
@@ -464,7 +464,7 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
 }
 .terminal-body::-webkit-scrollbar{ width:4px; }
 .terminal-body::-webkit-scrollbar-thumb{ background:rgba(0,229,255,0.2); border-radius:4px; }
-
+ 
 .t-line{ margin-bottom:2px; }
 .t-prompt{ color:#00e5ff; }
 .t-output{ color:#94a3b8; }
@@ -472,7 +472,7 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
 .t-error{ color:#f87171; }
 .t-info{ color:#38bdf8; }
 .t-bold{ color:#e2e8f0; font-weight:600; }
-
+ 
 .terminal-input-row{
     display:flex; align-items:center;
     padding:12px 20px;
@@ -486,14 +486,14 @@ nav button:hover .kbd, nav button.active .kbd{ color:#00e5ff; border-color:rgba(
     font-size:0.9rem; cursor:none;
 }
 #terminal-input::placeholder{ color:#334155; }
-
+ 
 /* ===== FOOTER ===== */
 footer{
     text-align:center; padding:30px;
     background:#020617; color:#94a3b8;
     border-top:1px solid rgba(0,229,255,0.15);
 }
-
+ 
 /* ===== REDUCED MOTION ===== */
 @media(prefers-reduced-motion:reduce){
     *, *::before, *::after{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
@@ -502,16 +502,16 @@ footer{
 </style>
 </head>
 <body>
-
+ 
 <!-- Custom cursor elements -->
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
-
+ 
 <!-- Scroll progress bar -->
 <div id="progress-bar"></div>
-
+ 
 <canvas id="particles"></canvas>
-
+ 
 <!-- ===== NAV ===== -->
 <nav id="navbar">
     <button onclick="showPage('home')"     class="active" data-page="home">Home <span class="kbd">1</span></button>
@@ -524,7 +524,7 @@ footer{
     <button onclick="showPage('resume')"   data-page="resume">Resume <span class="kbd">8</span></button>
     <button onclick="showPage('contact')"  data-page="contact">Contact <span class="kbd">9</span></button>
 </nav>
-
+ 
 <!-- ===== HOME ===== -->
 <div class="page active" id="page-home">
     <h1>Dhruv Pandya</h1>
@@ -532,7 +532,7 @@ footer{
     <p>Passionate about Artificial Intelligence, Cybersecurity, Software Development, Cloud Systems, and futuristic computing.</p>
     <button class="btn" onclick="showPage('projects')">Explore My Work</button>
 </div>
-
+ 
 <!-- ===== ABOUT ===== -->
 <div class="page" id="page-about">
     <div class="inner">
@@ -548,7 +548,7 @@ footer{
         </div>
     </div>
 </div>
-
+ 
 <!-- ===== DEGREES ===== -->
 <div class="page" id="page-degrees">
     <div class="inner">
@@ -578,7 +578,7 @@ footer{
         </div>
     </div>
 </div>
-
+ 
 <!-- ===== SKILLS ===== -->
 <div class="page" id="page-skills">
     <div class="inner">
@@ -599,12 +599,12 @@ footer{
         </div>
     </div>
 </div>
-
+ 
 <!-- ===== PROJECTS ===== -->
 <div class="page" id="page-projects">
     <div class="inner">
         <h2 class="section-title reveal">Projects</h2>
-
+ 
         <!-- Filter bar -->
         <div class="filter-bar reveal">
             <button class="filter-btn active" onclick="filterProjects('all')">All</button>
@@ -613,9 +613,9 @@ footer{
             <button class="filter-btn" onclick="filterProjects('Web')">Web</button>
             <button class="filter-btn" onclick="filterProjects('Infra')">Infrastructure</button>
         </div>
-
+ 
         <div class="grid reveal-grid" id="projects-grid">
-
+ 
             <div class="project" data-tags="AI,Python">
                 <h3>AI Assistant System</h3>
                 <p>Intelligent automation and AI-based interaction system with natural language processing capabilities.</p>
@@ -635,7 +635,7 @@ footer{
                     </a>
                 </div>
             </div>
-
+ 
             <div class="project" data-tags="Infra,Linux">
                 <h3>Home Lab Infrastructure</h3>
                 <p>Self-hosted servers and networking environment for testing and development.</p>
@@ -655,7 +655,7 @@ footer{
                     </a>
                 </div>
             </div>
-
+ 
             <div class="project" data-tags="Security">
                 <h3>Cybersecurity Labs</h3>
                 <p>Ethical hacking, penetration testing, and defense systems research environment.</p>
@@ -675,7 +675,7 @@ footer{
                     </a>
                 </div>
             </div>
-
+ 
             <div class="project" data-tags="Web">
                 <h3>Web Development</h3>
                 <p>Modern responsive applications and UI systems built with cutting-edge frameworks.</p>
@@ -695,51 +695,51 @@ footer{
                     </a>
                 </div>
             </div>
-
+ 
         </div>
     </div>
 </div>
-
+ 
 <!-- ===== TIMELINE ===== -->
 <div class="page" id="page-timeline">
     <div class="inner">
         <h2 class="section-title reveal">My Journey</h2>
         <div class="timeline">
-
+ 
             <div class="tl-item reveal">
                 <div class="tl-year">2022</div>
                 <h3>Started Coding</h3>
                 <p>Wrote my first Python scripts and discovered a passion for automation and problem-solving. Started exploring web technologies.</p>
             </div>
-
+ 
             <div class="tl-item reveal">
                 <div class="tl-year">2023</div>
                 <h3>Entered University</h3>
                 <p>Enrolled in B.S. Computer Science with a focus on AI/ML. Began building personal projects and exploring cybersecurity fundamentals.</p>
             </div>
-
+ 
             <div class="tl-item reveal">
                 <div class="tl-year">2024</div>
                 <h3>AWS Cloud Practitioner</h3>
                 <p>Earned foundational AWS certification. Deployed first cloud-hosted applications and set up home lab infrastructure with Docker and Linux.</p>
             </div>
-
+ 
             <div class="tl-item reveal">
                 <div class="tl-year">2025</div>
                 <h3>CompTIA A+ Certified</h3>
                 <p>Completed CompTIA A+ certification. Deep-dived into penetration testing, Kali Linux, and ethical hacking methodologies.</p>
             </div>
-
+ 
             <div class="tl-item reveal">
                 <div class="tl-year">2027 →</div>
                 <h3>B.S. Computer Science (Expected)</h3>
                 <p>Graduating with a specialization in Artificial Intelligence and Machine Learning. Open to full-time roles in AI, security, and cloud engineering.</p>
             </div>
-
+ 
         </div>
     </div>
 </div>
-
+ 
 <!-- ===== TERMINAL ===== -->
 <div class="page" id="page-terminal">
     <div class="inner">
@@ -764,7 +764,7 @@ footer{
         </div>
     </div>
 </div>
-
+ 
 <!-- ===== RESUME ===== -->
 <div class="page" id="page-resume">
     <div class="inner">
@@ -781,7 +781,7 @@ footer{
         </div>
     </div>
 </div>
-
+ 
 <!-- ===== CONTACT ===== -->
 <div class="page" id="page-contact">
     <div class="inner">
@@ -809,9 +809,9 @@ footer{
         </a>
     </div>
 </div>
-
+ 
 <footer>© 2026 Dhruv Pandya. All Rights Reserved.</footer>
-
+ 
 <script>
 /* ============================================================
    PAGE ROUTER
@@ -827,7 +827,7 @@ function showPage(name){
     // Re-trigger scroll reveal for the new page
     setTimeout(triggerReveal, 50);
 }
-
+ 
 /* ============================================================
    KEYBOARD NAVIGATION  (keys 1–9)
    ============================================================ */
@@ -838,20 +838,20 @@ document.addEventListener('keydown', e => {
     const idx = parseInt(e.key) - 1;
     if(idx >= 0 && idx < pages.length) showPage(pages[idx]);
 });
-
+ 
 /* ============================================================
    CUSTOM CURSOR
    ============================================================ */
 const cursor = document.getElementById('cursor');
 const cursorRing = document.getElementById('cursor-ring');
 let cx = 0, cy = 0, rx = 0, ry = 0;
-
+ 
 document.addEventListener('mousemove', e => {
     cx = e.clientX; cy = e.clientY;
     cursor.style.left = cx + 'px';
     cursor.style.top  = cy + 'px';
 });
-
+ 
 // Ring follows with slight lag for a smooth trailing feel
 function animateRing(){
     rx += (cx - rx) * 0.18;
@@ -861,7 +861,7 @@ function animateRing(){
     requestAnimationFrame(animateRing);
 }
 animateRing();
-
+ 
 /* ============================================================
    SCROLL PROGRESS BAR
    ============================================================ */
@@ -872,7 +872,7 @@ window.addEventListener('scroll', () => {
     const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
     progressBar.style.width = pct + '%';
 });
-
+ 
 /* ============================================================
    SCROLL REVEAL
    Uses IntersectionObserver to add .visible when elements
@@ -886,7 +886,7 @@ const revealObserver = new IntersectionObserver((entries) => {
         }
     });
 }, { threshold: 0.12 });
-
+ 
 function triggerReveal(){
     document.querySelectorAll('.reveal, .reveal-grid').forEach(el => {
         // If already visible, skip
@@ -894,7 +894,7 @@ function triggerReveal(){
     });
 }
 triggerReveal();
-
+ 
 /* ============================================================
    TYPEWRITER EFFECT
    Cycles through an array of role strings, typing each out
@@ -910,7 +910,7 @@ const roles = [
 ];
 let roleIdx = 0, charIdx = 0, deleting = false;
 const tw = document.getElementById('typewriter');
-
+ 
 function typeWriter(){
     const current = roles[roleIdx];
     if(deleting){
@@ -933,11 +933,11 @@ function typeWriter(){
     }
 }
 typeWriter();
-
+ 
 /* ============================================================
    ANIMATED GRADIENT TITLE (h1) — handled by CSS keyframe
    ============================================================ */
-
+ 
 /* ============================================================
    PROJECT TAG FILTERING
    Each project card has a data-tags attribute with comma-
@@ -957,7 +957,7 @@ function filterProjects(tag){
         card.classList.toggle('hidden', !show);
     });
 }
-
+ 
 /* ============================================================
    INTERACTIVE TERMINAL
    Supports commands: help, about, skills, projects, contact,
@@ -965,10 +965,10 @@ function filterProjects(tag){
    ============================================================ */
 const termOut = document.getElementById('terminal-output');
 const termIn  = document.getElementById('terminal-input');
-
+ 
 // Command history for ↑/↓ navigation
 let cmdHistory = [], histIdx = -1;
-
+ 
 const COMMANDS = {
     help(){
         return [
@@ -1031,7 +1031,7 @@ const COMMANDS = {
         return [];
     },
 };
-
+ 
 function termPrint(lines){
     lines.forEach(({cls, txt}) => {
         const div = document.createElement('div');
@@ -1046,20 +1046,20 @@ function termPrint(lines){
     termOut.appendChild(blank);
     termOut.scrollTop = termOut.scrollHeight;
 }
-
+ 
 function runCommand(raw){
     const parts = raw.trim().split(/\s+/);
     const cmd   = parts[0].toLowerCase();
     const args  = parts.slice(1);
-
+ 
     // Echo the prompt + command
     const promptLine = document.createElement('div');
     promptLine.className = 't-line';
     promptLine.innerHTML = `<span class="t-prompt">dhruv@portfolio:~$ </span><span style="color:#e2e8f0">${raw}</span>`;
     termOut.appendChild(promptLine);
-
+ 
     if(!cmd){ termOut.scrollTop = termOut.scrollHeight; return; }
-
+ 
     if(cmd === 'echo'){
         termPrint([{cls:'t-output', txt: args.join(' ') || ''}]);
     } else if(cmd === 'navigate'){
@@ -1076,7 +1076,7 @@ function runCommand(raw){
         termPrint([{cls:'t-error', txt:`command not found: ${cmd}. Type <span class="t-info">help</span> for a list.`}]);
     }
 }
-
+ 
 termIn.addEventListener('keydown', e => {
     if(e.key === 'Enter'){
         const val = termIn.value;
@@ -1093,10 +1093,10 @@ termIn.addEventListener('keydown', e => {
         else { histIdx = -1; termIn.value = ''; }
     }
 });
-
+ 
 // Click anywhere in terminal window to focus input
 document.querySelector('.terminal-window')?.addEventListener('click', () => termIn.focus());
-
+ 
 /* ============================================================
    PARTICLES (unchanged)
    ============================================================ */
@@ -1104,18 +1104,18 @@ const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-
+ 
 let particlesArray = [];
 const numberOfParticles = 90;
 let mouse = { x:null, y:null, radius:120 };
-
+ 
 window.addEventListener("mousemove", e=>{ mouse.x=e.x; mouse.y=e.y; });
 window.addEventListener("resize", ()=>{
     canvas.width=window.innerWidth;
     canvas.height=window.innerHeight;
     init();
 });
-
+ 
 class Particle{
     constructor(x,y,dx,dy,size){ this.x=x; this.y=y; this.dx=dx; this.dy=dy; this.size=size; }
     draw(){
